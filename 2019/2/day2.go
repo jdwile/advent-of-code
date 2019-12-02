@@ -19,14 +19,14 @@ func executeProgram(instructions []int) int {
 		n := instructions[i]
 		switch n {
 		case 1:
-			j := instructions[i + 1]
-			k := instructions[i + 2]
-			l := instructions[i + 3]
+			j := instructions[i+1]
+			k := instructions[i+2]
+			l := instructions[i+3]
 			instructions[l] = instructions[j] + instructions[k]
 		case 2:
-			j := instructions[i + 1]
-			k := instructions[i + 2]
-			l := instructions[i + 3]
+			j := instructions[i+1]
+			k := instructions[i+2]
+			l := instructions[i+3]
 			instructions[l] = instructions[j] * instructions[k]
 		case 99:
 			break
@@ -49,7 +49,7 @@ func readInput() []int {
 		i, _ := strconv.Atoi(n)
 		nums = append(nums, i)
 	}
-	
+
 	return nums
 }
 
@@ -78,7 +78,7 @@ func solvePartTwo(s []int) {
 
 			if res == target {
 				found = true
-				fmt.Println(100 * noun + verb, res)
+				fmt.Println(100*noun+verb, res)
 			}
 		}
 

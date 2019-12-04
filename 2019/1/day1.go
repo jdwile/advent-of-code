@@ -3,8 +3,10 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/jdwile/advent-of-code/2019/utils"
 	"os"
 	"strconv"
+	"time"
 )
 
 func main() {
@@ -39,6 +41,7 @@ func readInput() []int {
 }
 
 func solvePartOne(modules []int) {
+	defer utils.TimeTrack(time.Now(), "Day 1: Part 1")
 	fmt.Println("\nPart 1")
 	fuel := 0
 
@@ -50,6 +53,7 @@ func solvePartOne(modules []int) {
 }
 
 func solvePartTwo(modules []int) {
+	defer utils.TimeTrack(time.Now(), "Day 1: Part 2")
 	fmt.Println("\nPart 2")
 	fuel := 0
 

@@ -3,9 +3,11 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/jdwile/advent-of-code/2019/utils"
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -54,6 +56,7 @@ func readInput() []int {
 }
 
 func solvePartOne(s []int) {
+	defer utils.TimeTrack(time.Now(), "Day 2: Part 1")
 	instructions := make([]int, len(s))
 	copy(instructions, s)
 
@@ -64,6 +67,7 @@ func solvePartOne(s []int) {
 }
 
 func solvePartTwo(s []int) {
+	defer utils.TimeTrack(time.Now(), "Day 2: Part 2")
 	target := 19690720
 
 	instructions := make([]int, len(s))

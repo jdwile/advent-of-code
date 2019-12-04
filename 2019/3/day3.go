@@ -3,10 +3,12 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/jdwile/advent-of-code/2019/utils"
 	"math"
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Point struct {
@@ -128,6 +130,7 @@ func FindIntersection(a Point, b Point, c Point, d Point) Point {
 }
 
 func SolvePartOne(lines [][]Line) {
+	defer utils.TimeTrack(time.Now(), "Day 3: Part 1")
 	intersections := make([]int, 0)
 	for _, line1 := range lines[0] {
 		for _, line2 := range lines[1] {
@@ -152,6 +155,7 @@ func SolvePartOne(lines [][]Line) {
 }
 
 func SolvePartTwo(lines [][]Line) {
+	defer utils.TimeTrack(time.Now(), "Day 3: Part 2")
 	intersections := make([]int, 0)
 	for _, line1 := range lines[0] {
 		for _, line2 := range lines[1] {

@@ -43,30 +43,30 @@ func executeProgram(instructions []int, input []int) {
 		}
 
 		switch n {
-		case 1:
+		case 1: // add
 			j := instructions[i+1]
 			k := instructions[i+2]
 			l := instructions[i+3]
 			instructions[l] = chooseMode(ji, j, instructions) + chooseMode(ki, k, instructions)
 			i += 4
-		case 2:
+		case 2: // multiply
 			j := instructions[i+1]
 			k := instructions[i+2]
 			l := instructions[i+3]
 			instructions[l] = chooseMode(ji, j, instructions) * chooseMode(ki, k, instructions)
 			i += 4
-		case 3:
+		case 3: // input
 			j := instructions[i+1]
 			k := input[0]
 			instructions[j] = k
 			input = input[1:]
 			i += 2
-		case 4:
+		case 4: // output
 			j := instructions[i+1]
 			output := chooseMode(ji, j, instructions)
-			fmt.Println("OUTPUT:", output)
+			fmt.Println("PROGRAM OUTPUT:", output)
 			i += 2
-		case 5:
+		case 5: // jump true
 			j := instructions[i+1]
 			k := instructions[i+2]
 			if chooseMode(ji, j, instructions) != 0 {
@@ -74,7 +74,7 @@ func executeProgram(instructions []int, input []int) {
 			} else {
 				i += 3
 			}
-		case 6:
+		case 6: // jump false
 			j := instructions[i+1]
 			k := instructions[i+2]
 			if chooseMode(ji, j, instructions) == 0 {
@@ -82,7 +82,7 @@ func executeProgram(instructions []int, input []int) {
 			} else {
 				i += 3
 			}
-		case 7:
+		case 7: // less than
 			j := instructions[i+1]
 			k := instructions[i+2]
 			l := instructions[i+3]
@@ -91,7 +91,7 @@ func executeProgram(instructions []int, input []int) {
 			} else {
 				instructions[l] = 0
 			}
-			i += 4
+			i += 4 // equal to
 		case 8:
 			j := instructions[i+1]
 			k := instructions[i+2]
@@ -102,10 +102,11 @@ func executeProgram(instructions []int, input []int) {
 				instructions[l] = 0
 			}
 			i += 4
-		case 99:
+		case 99: // end
 			loop = false
 			break
 		}
+
 		if i >= len(instructions) {
 			loop = false
 		}
@@ -130,38 +131,10 @@ func readInput() []int {
 	return nums
 }
 
-func solve(s []int, i []int) {
-	defer utils.TimeTrack(time.Now(), "Day 2: Part 1")
+func solve(s []int, input []int) {
+	defer utils.TimeTrack(time.Now(), "Day 5")
 	instructions := make([]int, len(s))
 	copy(instructions, s)
-	input := make([]int, len(i))
-	copy(input, i)
 
 	executeProgram(instructions, input)
 }
-
-// func solvePartTwo(s []int) {
-// 	defer utils.TimeTrack(time.Now(), "Day 2: Part 2")
-// 	target := 19690720
-
-// 	instructions := make([]int, len(s))
-// 	found := false
-
-// 	for noun := 0; noun <= 99; noun++ {
-// 		for verb := 0; verb <= 99; verb++ {
-// 			copy(instructions, s)
-// 			instructions[1] = noun
-// 			instructions[2] = verb
-// 			res := executeProgram(instructions)
-
-// 			if res == target {
-// 				found = true
-// 				fmt.Println(100*noun+verb, res)
-// 			}
-// 		}
-
-// 		if found {
-// 			break
-// 		}
-// 	}
-// }

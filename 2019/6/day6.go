@@ -33,6 +33,7 @@ func readInput() map[string][]string {
 	nodes := make(map[string][]string)
 	for scanner.Scan() {
 		a := strings.Split(scanner.Text(), ")")
+
 		if nodes[a[0]] != nil {
 			if !contains(nodes[a[0]], a[1]) {
 				nodes[a[0]] = append(nodes[a[0]], a[1])
@@ -50,30 +51,17 @@ func readInput() map[string][]string {
 		}
 	}
 
-	// for key, val := range nodes {
-	// 	fmt.Println(key, ":", val)
-	// }
-
 	return nodes
 }
 
-func CountIndirect(parent string, nodes map[string][]string, vi map[string]bool) int {
+func CountDescendants(p string, nodes map[string][]string, vi map[string]bool) int {
 	c := 0
-	var l []string
+
 	v := make(map[string]bool)
 	for key, val := range vi {
 		v[key] = val
 	}
-
-	if nodes[parent] == nil {
-		return c
-	}
-
-	for _, n := range nodes[parent] {
-		if !v[n] {
-			l = append(l, n)
-		}
-	}
+	l := []string{p}
 
 	for len(l) > 0 {
 		j := l[0]
@@ -119,7 +107,7 @@ func MinDistance(s, e string, nodes map[string][]string) int {
 func solvePartOne(nodes map[string][]string) {
 	defer utils.TimeTrack(time.Now(), "Day 6: Part 1")
 	numDirect := 1
-	numIndirect := 0
+	numIndirect := -1
 	v := make(map[string]bool)
 	l := []string{"COM"}
 
@@ -129,9 +117,10 @@ func solvePartOne(nodes map[string][]string) {
 		v[j] = true
 
 		if nodes[j] != nil {
-			numDirect += len(nodes[j]) - 1
-			// fmt.Println(j, nodes[j], numDirect)
-			numIndirect += CountIndirect(j, nodes, v)
+			d := len(nodes[j]) - 1
+			i := CountDescendants(j, nodes, v) - d
+			numDirect += d
+			numIndirect += i
 
 			for _, k := range nodes[j] {
 				if !v[k] {
@@ -141,10 +130,10 @@ func solvePartOne(nodes map[string][]string) {
 		}
 	}
 
-	fmt.Println("Part 1:", numDirect + numIndirect)
+	fmt.Println("Part 1:", numDirect+numIndirect)
 }
 
 func solvePartTwo(nodes map[string][]string) {
 	defer utils.TimeTrack(time.Now(), "Day 6: Part 2")
-	fmt.Println("Part 2:", MinDistance("YOU", "SAN", nodes) - 2)
+	fmt.Println("Part 2:", MinDistance("YOU", "SAN", nodes)-2)
 }

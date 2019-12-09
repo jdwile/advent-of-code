@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	. "github.com/jdwile/advent-of-code/2019/intcode-cpu"
 	"github.com/jdwile/advent-of-code/2019/utils"
 	"os"
 	"strconv"
@@ -11,78 +12,56 @@ import (
 )
 
 func main() {
-	instructions := readInput()
-	solvePartOne(instructions)
-	solvePartTwo(instructions)
+	solvePartOne()
+	solvePartTwo()
 }
 
-func executeProgram(instructions []int) int {
-	for i := 0; i < len(instructions); i += 4 {
-		n := instructions[i]
-		switch n {
-		case 1:
-			j := instructions[i+1]
-			k := instructions[i+2]
-			l := instructions[i+3]
-			instructions[l] = instructions[j] + instructions[k]
-		case 2:
-			j := instructions[i+1]
-			k := instructions[i+2]
-			l := instructions[i+3]
-			instructions[l] = instructions[j] * instructions[k]
-		case 99:
-			break
-		}
-	}
-	return instructions[0]
-}
-
-func readInput() []int {
+func readInput() map[int]int {
 	file, _ := os.Open("./input.txt")
 	defer file.Close()
 
-	var nums []int
 	scanner := bufio.NewScanner(file)
+	m := make(map[int]int)
 
 	scanner.Scan()
 	arr := strings.Split(scanner.Text(), ",")
 
-	for _, n := range arr {
-		i, _ := strconv.Atoi(n)
-		nums = append(nums, i)
+	for i, n := range arr {
+		a, _ := strconv.Atoi(n)
+		m[i] = a
 	}
 
-	return nums
+	return m
 }
 
-func solvePartOne(s []int) {
+func solvePartOne() {
 	defer utils.TimeTrack(time.Now(), "Day 2: Part 1")
-	instructions := make([]int, len(s))
-	copy(instructions, s)
+	m := readInput()
+	m[1] = 12
+	m[2] = 2
 
-	instructions[1] = 12
-	instructions[2] = 2
-	res := executeProgram(instructions)
-	fmt.Println(res)
+	c := ConstructCPU(m)
+	c = c.ExecuteProgram()
+	fmt.Println(c.Memory[0])
 }
 
-func solvePartTwo(s []int) {
+func solvePartTwo() {
 	defer utils.TimeTrack(time.Now(), "Day 2: Part 2")
 	target := 19690720
-
-	instructions := make([]int, len(s))
 	found := false
 
 	for noun := 0; noun <= 99; noun++ {
 		for verb := 0; verb <= 99; verb++ {
-			copy(instructions, s)
-			instructions[1] = noun
-			instructions[2] = verb
-			res := executeProgram(instructions)
+			m := readInput()
+			m[1] = noun
+			m[2] = verb
 
-			if res == target {
+			c := ConstructCPU(m)
+			c = c.ExecuteProgram()
+
+			if c.Memory[0] == target {
 				found = true
-				fmt.Println(100*noun+verb, res)
+				fmt.Println(100*noun + verb)
 			}
 		}
 

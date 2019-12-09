@@ -3,8 +3,8 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/jdwile/advent-of-code/2019/utils"
 	"github.com/ernestosuarez/itertools"
+	"github.com/jdwile/advent-of-code/2019/utils"
 	"os"
 	"strconv"
 	"strings"
@@ -13,8 +13,16 @@ import (
 
 func main() {
 	instructions := readInput()
-	// solvePart1(instructions, []int{1,0,4,3,2})
-	solvePart2(instructions, []int{9,8,7,6,5})
+	solvePart1(instructions, []int{1, 0, 4, 3, 2})
+	solvePart2(instructions, []int{9, 8, 7, 6, 5})
+}
+
+type CPU struct {
+	Instructions []int
+	Input        []int
+	Output       []int
+	Counter      int
+	Halted       bool
 }
 
 func Max(x, y int) int {
@@ -31,13 +39,10 @@ func chooseMode(mode bool, i int, arr []int) int {
 	return arr[i]
 }
 
-func executeProgram(instructions []int, input []int, def int) ([]int, []int) {
-	// fmt.Println("Executing Program", instructions, input, def)
-	output := []int{}
-	i := 0
+func executeProgram(c CPU) CPU {
 	loop := true
 	for loop {
-		n := instructions[i]
+		n := c.Instructions[c.Counter]
 		ji := false
 		ki := false
 
@@ -54,88 +59,86 @@ func executeProgram(instructions []int, input []int, def int) ([]int, []int) {
 
 		switch n {
 		case 1: // add
-			j := instructions[i+1]
-			k := instructions[i+2]
-			l := instructions[i+3]
-			instructions[l] = chooseMode(ji, j, instructions) + chooseMode(ki, k, instructions)
-			i += 4
+			j := c.Instructions[c.Counter+1]
+			k := c.Instructions[c.Counter+2]
+			l := c.Instructions[c.Counter+3]
+			c.Instructions[l] = chooseMode(ji, j, c.Instructions) + chooseMode(ki, k, c.Instructions)
+			c.Counter += 4
 		case 2: // multiply
-			j := instructions[i+1]
-			k := instructions[i+2]
-			l := instructions[i+3]
-			instructions[l] = chooseMode(ji, j, instructions) * chooseMode(ki, k, instructions)
-			i += 4
+			j := c.Instructions[c.Counter+1]
+			k := c.Instructions[c.Counter+2]
+			l := c.Instructions[c.Counter+3]
+			c.Instructions[l] = chooseMode(ji, j, c.Instructions) * chooseMode(ki, k, c.Instructions)
+			c.Counter += 4
 		case 3: // input
-			j := instructions[i+1]
-			var k int;
-			if len(input) > 0 {
-				k = input[0]
+			j := c.Instructions[c.Counter+1]
+			var k int
+			if len(c.Input) > 0 {
+				k = c.Input[0]
 			} else {
-				k = def
+				loop = false
+				break
 			}
-			instructions[j] = k
-			if len(input) <= 1 {
-				input = []int{}
+			c.Instructions[j] = k
+			if len(c.Input) <= 1 {
+				c.Input = []int{}
 			} else {
-				input = input[1:]
+				c.Input = c.Input[1:]
 			}
-			i += 2
+			c.Counter += 2
 		case 4: // output
-			j := instructions[i+1]
-			o := chooseMode(ji, j, instructions)
-			output = append(output, o);
-			i += 2
-			loop = false
-			break
+			j := c.Instructions[c.Counter+1]
+			o := chooseMode(ji, j, c.Instructions)
+			c.Output = append(c.Output, o)
+			c.Counter += 2
 		case 5: // jump true
-			j := instructions[i+1]
-			k := instructions[i+2]
-			if chooseMode(ji, j, instructions) != 0 {
-				i = chooseMode(ki, k, instructions)
+			j := c.Instructions[c.Counter+1]
+			k := c.Instructions[c.Counter+2]
+			if chooseMode(ji, j, c.Instructions) != 0 {
+				c.Counter = chooseMode(ki, k, c.Instructions)
 			} else {
-				i += 3
+				c.Counter += 3
 			}
 		case 6: // jump false
-			j := instructions[i+1]
-			k := instructions[i+2]
-			if chooseMode(ji, j, instructions) == 0 {
-				i = chooseMode(ki, k, instructions)
+			j := c.Instructions[c.Counter+1]
+			k := c.Instructions[c.Counter+2]
+			if chooseMode(ji, j, c.Instructions) == 0 {
+				c.Counter = chooseMode(ki, k, c.Instructions)
 			} else {
-				i += 3
+				c.Counter += 3
 			}
 		case 7: // less than
-			j := instructions[i+1]
-			k := instructions[i+2]
-			l := instructions[i+3]
-			if chooseMode(ji, j, instructions) < chooseMode(ki, k, instructions) {
-				instructions[l] = 1
+			j := c.Instructions[c.Counter+1]
+			k := c.Instructions[c.Counter+2]
+			l := c.Instructions[c.Counter+3]
+			if chooseMode(ji, j, c.Instructions) < chooseMode(ki, k, c.Instructions) {
+				c.Instructions[l] = 1
 			} else {
-				instructions[l] = 0
+				c.Instructions[l] = 0
 			}
-			i += 4 // equal to
-		case 8:
-			j := instructions[i+1]
-			k := instructions[i+2]
-			l := instructions[i+3]
-			if chooseMode(ji, j, instructions) == chooseMode(ki, k, instructions) {
-				instructions[l] = 1
+			c.Counter += 4
+		case 8: // equal to
+			j := c.Instructions[c.Counter+1]
+			k := c.Instructions[c.Counter+2]
+			l := c.Instructions[c.Counter+3]
+			if chooseMode(ji, j, c.Instructions) == chooseMode(ki, k, c.Instructions) {
+				c.Instructions[l] = 1
 			} else {
-				instructions[l] = 0
+				c.Instructions[l] = 0
 			}
-			i += 4
+			c.Counter += 4
 		case 99: // end
-			fmt.Println("HALT")
+			c.Halted = true
 			loop = false
 			break
 		}
 
-		if i >= len(instructions) {
+		if c.Counter >= len(c.Instructions) {
 			loop = false
 		}
 	}
 
-	fmt.Println("OUTPUT LENGTH", len(output))
-	return output, input;
+	return c
 }
 
 func readInput() []int {
@@ -163,72 +166,56 @@ func solvePart1(s []int, input []int) {
 	answer := 0
 	for v := range itertools.PermutationsInt(input, len(input)) {
 		d := 0
-		for i,_ := range []string{"A", "B", "C", "D", "E"} {
+		for i, _ := range []string{"A", "B", "C", "D", "E"} {
 			copy(instructions, s)
-			// fmt.Println(instructions);
-			res,_ := executeProgram(instructions, []int{v[i], d}, d)
-			d = res[0]
+			c := CPU{instructions, []int{v[i], d}, []int{}, 0, false}
+			c = executeProgram(c)
+			d = c.Output[0]
 		}
-		answer = Max(answer, d);
+		answer = Max(answer, d)
 	}
 	fmt.Println(answer)
 }
 
 func solvePart2(s []int, input []int) {
-	defer utils.TimeTrack(time.Now(), "Day 7: Part 1")
-	instructions := make([][]int, 5)
-	for i,_ := range instructions {
-		instructions[i] = make([]int, len(s));
-		copy(instructions[i], s)
-	}
+	defer utils.TimeTrack(time.Now(), "Day 7: Part 2")
 
 	amps := []string{"A", "B", "C", "D", "E"}
-	var signals [5][]int
-	lastE := 0
-	halt := false
-
-	count := 0
+	m := 0
 
 	for v := range itertools.PermutationsInt(input, len(input)) {
-		for i,j := range v {
+		var lastE int
+		halt := false
+		cpus := make([]CPU, 5)
+		for i, j := range v {
+			instructions := make([]int, len(s))
+			copy(instructions, s)
+			cpus[i] = CPU{instructions, []int{}, []int{}, 0, false}
 			if i == 0 {
-				signals[i] = []int{0, j}
+				cpus[i].Input = []int{j, 0}
 			} else {
-				signals[i] = []int{j}
+				cpus[i].Input = []int{j}
 			}
 		}
-		fmt.Println(v)
 		for !halt {
-			for i,_ := range amps {
-				if (count > 20) {
-					halt = true
-					break
+			for i, _ := range amps {
+				if !cpus[i].Halted {
+					cpus[i] = executeProgram(cpus[i])
+					if i == len(amps)-1 && len(cpus[i].Output) > 0 {
+						lastE = cpus[i].Output[len(cpus[i].Output)-1]
+					}
+					for _, j := range cpus[i].Output {
+						cpus[(i+1)%len(cpus)].Input = append(cpus[(i+1)%len(cpus)].Input, j)
+					}
+					cpus[i].Output = []int{}
 				}
-				count += 1
-				fmt.Println(count, amps[i], signals[i], instructions[i])
-				// if i == 0 {
-				// 	fmt.Println("\n", amps[i], instructions[i], "\n");
-				// }
-				curInstruction := make([]int, len(instructions[i]));
-				copy(curInstruction, instructions[i])
-				c := signals[i]
-				res, c := executeProgram(instructions[i], c, c[len(c) - 1])
-				copy(instructions[i], curInstruction)
-				signals[i] = c
-				fmt.Println(amps[i], res, c)
-				if (len(res) < 0) {
-					halt = true
-					break
-				}
-				if (i == 4) {
-					lastE = res[len(res) - 1]
-				}
-				for _,j := range res {
-					signals[(i + 1) % len(signals)] = append(signals[(i + 1) % len(signals)], j)
-				}
-				fmt.Println("Post", count, amps[i], signals[i], instructions[i])
+			}
+			halt = true
+			for _, cpu := range cpus {
+				halt = halt && cpu.Halted
 			}
 		}
+		m = Max(m, lastE)
 	}
-	fmt.Println(lastE)
+	fmt.Println(m)
 }

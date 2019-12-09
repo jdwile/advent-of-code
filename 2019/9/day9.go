@@ -52,11 +52,9 @@ func chooseSetMode(mode byte, i int, c CPU) int {
 }
 
 func executeProgram(c CPU) CPU {
-	// fmt.Println("Executing program", c)
 	loop := true
 	for loop {
 		n := c.Memory[c.InstructionPointer]
-		// fmt.Println("Executing instruction", n)
 		jMode := "0"[0]
 		kMode := "0"[0]
 		lMode := "0"[0]
@@ -98,7 +96,6 @@ func executeProgram(c CPU) CPU {
 				loop = false
 				break
 			}
-			// fmt.Println(n, chooseMode(jMode, j, c), k, jMode, kMod, c.RelativeBase)
 			c.Memory[chooseSetMode(jMode, j, c)] = k
 			if len(c.Input) <= 1 {
 				c.Input = []int{}

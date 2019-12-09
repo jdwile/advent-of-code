@@ -16,6 +16,24 @@ func main() {
 	solvePart2(memory)
 }
 
+func readInput() map[int]int {
+	file, _ := os.Open("./input.txt")
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	m := make(map[int]int)
+
+	scanner.Scan()
+	arr := strings.Split(scanner.Text(), ",")
+
+	for i, n := range arr {
+		a, _ := strconv.Atoi(n)
+		m[i] = a
+	}
+
+	return m
+}
+
 type CPU struct {
 	Memory             map[int]int
 	Input              []int
@@ -23,6 +41,10 @@ type CPU struct {
 	InstructionPointer int
 	RelativeBase       int
 	Halted             bool
+}
+
+func ConstructCPU(memory map[int]int) CPU {
+	return CPU{memory, []int{}, []int{}, 0, 0, false}
 }
 
 func Max(x, y int) int {
@@ -51,28 +73,32 @@ func chooseSetMode(mode byte, i int, c CPU) int {
 	return i
 }
 
-func executeProgram(c CPU) CPU {
+func parseOpcode(n int) (int, byte, byte, byte) {
+	jMode := "0"[0]
+	kMode := "0"[0]
+	lMode := "0"[0]
+
+	if n > 99 {
+		s := strconv.Itoa(n)
+		if len(s) == 3 {
+			s = "0" + s
+		}
+		if len(s) == 4 {
+			s = "0" + s
+		}
+
+		n = n % 100
+		jMode = s[2]
+		kMode = s[1]
+		lMode = s[0]
+	}
+	return n, jMode, kMode, lMode
+}
+
+func (c CPU) executeProgram() CPU {
 	loop := true
 	for loop {
-		n := c.Memory[c.InstructionPointer]
-		jMode := "0"[0]
-		kMode := "0"[0]
-		lMode := "0"[0]
-
-		if n > 99 {
-			s := strconv.Itoa(n)
-			if len(s) == 3 {
-				s = "0" + s
-			}
-			if len(s) == 4 {
-				s = "0" + s
-			}
-
-			n = n % 100
-			jMode = s[2]
-			kMode = s[1]
-			lMode = s[0]
-		}
+		n, jMode, kMode, lMode := parseOpcode(c.Memory[c.InstructionPointer])
 
 		switch n {
 		case 1: // add
@@ -88,14 +114,12 @@ func executeProgram(c CPU) CPU {
 			c.Memory[chooseSetMode(lMode, l, c)] = chooseValueMode(jMode, j, c) * chooseValueMode(kMode, k, c)
 			c.InstructionPointer += 4
 		case 3: // input
-			j := c.Memory[c.InstructionPointer+1]
-			var k int
-			if len(c.Input) > 0 {
-				k = c.Input[0]
-			} else {
+			if (len(c.Input) == 0) {
 				loop = false
 				break
 			}
+			j := c.Memory[c.InstructionPointer+1]
+			k := c.Input[0]
 			c.Memory[chooseSetMode(jMode, j, c)] = k
 			if len(c.Input) <= 1 {
 				c.Input = []int{}
@@ -153,45 +177,27 @@ func executeProgram(c CPU) CPU {
 			loop = false
 			break
 		}
-
-		if c.InstructionPointer >= len(c.Memory) {
-			loop = false
-		}
 	}
 
 	return c
 }
 
-func readInput() map[int]int {
-	file, _ := os.Open("./input.txt")
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-	m := make(map[int]int)
-
-	scanner.Scan()
-	arr := strings.Split(scanner.Text(), ",")
-
-	for i, n := range arr {
-		a, _ := strconv.Atoi(n)
-		m[i] = a
-	}
-
-	return m
-}
-
 func solvePart1(m map[int]int) {
 	defer utils.TimeTrack(time.Now(), "Day 9: Part 1")
 
-	c := CPU{m, []int{1}, []int{}, 0, 0, false}
-	c = executeProgram(c)
+	c := ConstructCPU(m)
+	c.Input = []int{1}
+
+	c = c.executeProgram()
 	fmt.Println(c.Output)
 }
 
 func solvePart2(m map[int]int) {
 	defer utils.TimeTrack(time.Now(), "Day 9: Part 2")
 
-	c := CPU{m, []int{2}, []int{}, 0, 0, false}
-	c = executeProgram(c)
+	c := ConstructCPU(m)
+	c.Input = []int{2}
+
+	c = c.executeProgram()
 	fmt.Println(c.Output)
 }

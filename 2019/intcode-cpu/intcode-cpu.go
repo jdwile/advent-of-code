@@ -34,6 +34,18 @@ func chooseSetMode(mode byte, i int, c CPU) int {
 	return i
 }
 
+func chooseValues(c CPU, jMode, kMode, lMode byte) (j, k, l int) {
+	j = c.Memory[c.InstructionPointer+1]
+	k = c.Memory[c.InstructionPointer+2]
+	l = c.Memory[c.InstructionPointer+3]
+
+	j = chooseValueMode(jMode, j, c)
+	k = chooseValueMode(kMode, k, c)
+	l = chooseSetMode(lMode, l, c)
+
+	return j, k, l
+}
+
 func parseOpcode(n int) (int, byte, byte, byte) {
 	jMode := "0"[0]
 	kMode := "0"[0]
@@ -60,28 +72,23 @@ func (c CPU) ExecuteProgram() CPU {
 	loop := true
 	for loop {
 		n, jMode, kMode, lMode := parseOpcode(c.Memory[c.InstructionPointer])
+		j, k, l := chooseValues(c, jMode, kMode, lMode)
 
 		switch n {
 		case 1: // add
-			j := c.Memory[c.InstructionPointer+1]
-			k := c.Memory[c.InstructionPointer+2]
-			l := c.Memory[c.InstructionPointer+3]
-			c.Memory[chooseSetMode(lMode, l, c)] = chooseValueMode(jMode, j, c) + chooseValueMode(kMode, k, c)
+			c.Memory[l] = j + k
 			c.InstructionPointer += 4
 		case 2: // multiply
-			j := c.Memory[c.InstructionPointer+1]
-			k := c.Memory[c.InstructionPointer+2]
-			l := c.Memory[c.InstructionPointer+3]
-			c.Memory[chooseSetMode(lMode, l, c)] = chooseValueMode(jMode, j, c) * chooseValueMode(kMode, k, c)
+			c.Memory[l] = j * k
 			c.InstructionPointer += 4
 		case 3: // input
 			if len(c.Input) == 0 {
 				loop = false
 				break
 			}
-			j := c.Memory[c.InstructionPointer+1]
-			k := c.Input[0]
-			c.Memory[chooseSetMode(jMode, j, c)] = k
+			j = chooseSetMode(jMode, c.Memory[c.InstructionPointer+1], c)
+			k = c.Input[0]
+			c.Memory[j] = k
 			if len(c.Input) <= 1 {
 				c.Input = []int{}
 			} else {
@@ -89,49 +96,36 @@ func (c CPU) ExecuteProgram() CPU {
 			}
 			c.InstructionPointer += 2
 		case 4: // output
-			j := c.Memory[c.InstructionPointer+1]
-			o := chooseValueMode(jMode, j, c)
-			c.Output = append(c.Output, o)
+			c.Output = append(c.Output, j)
 			c.InstructionPointer += 2
 		case 5: // jump true
-			j := c.Memory[c.InstructionPointer+1]
-			k := c.Memory[c.InstructionPointer+2]
-			if chooseValueMode(jMode, j, c) != 0 {
-				c.InstructionPointer = chooseValueMode(kMode, k, c)
+			if j != 0 {
+				c.InstructionPointer = k
 			} else {
 				c.InstructionPointer += 3
 			}
 		case 6: // jump false
-			j := c.Memory[c.InstructionPointer+1]
-			k := c.Memory[c.InstructionPointer+2]
-			if chooseValueMode(jMode, j, c) == 0 {
-				c.InstructionPointer = chooseValueMode(kMode, k, c)
+			if j == 0 {
+				c.InstructionPointer = k
 			} else {
 				c.InstructionPointer += 3
 			}
 		case 7: // less than
-			j := c.Memory[c.InstructionPointer+1]
-			k := c.Memory[c.InstructionPointer+2]
-			l := c.Memory[c.InstructionPointer+3]
-			if chooseValueMode(jMode, j, c) < chooseValueMode(kMode, k, c) {
-				c.Memory[chooseSetMode(lMode, l, c)] = 1
+			if j < k {
+				c.Memory[l] = 1
 			} else {
-				c.Memory[chooseSetMode(lMode, l, c)] = 0
+				c.Memory[l] = 0
 			}
 			c.InstructionPointer += 4
 		case 8: // equal to
-			j := c.Memory[c.InstructionPointer+1]
-			k := c.Memory[c.InstructionPointer+2]
-			l := c.Memory[c.InstructionPointer+3]
-			if chooseValueMode(jMode, j, c) == chooseValueMode(kMode, k, c) {
-				c.Memory[chooseSetMode(lMode, l, c)] = 1
+			if j == k {
+				c.Memory[l] = 1
 			} else {
-				c.Memory[chooseSetMode(lMode, l, c)] = 0
+				c.Memory[l] = 0
 			}
 			c.InstructionPointer += 4
 		case 9: // adjust relative base
-			j := c.Memory[c.InstructionPointer+1]
-			c.RelativeBase += chooseValueMode(jMode, j, c)
+			c.RelativeBase += j
 			c.InstructionPointer += 2
 		case 99: // end
 			c.Halted = true

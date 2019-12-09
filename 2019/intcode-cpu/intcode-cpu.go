@@ -1,6 +1,8 @@
 package cpu
 
-import "strconv"
+import (
+	"strconv"
+)
 
 type CPU struct {
 	Memory             map[int]int
@@ -105,19 +107,19 @@ func (c CPU) ExecuteProgram() CPU {
 			c.Output = append(c.Output, j)
 			c.InstructionPointer += 2
 		case 5: // jump true
-			v := 3
+			v := c.InstructionPointer + 3
 			if j != 0 {
 				v = k
 			}
 
-			c.InstructionPointer += v
+			c.InstructionPointer = v
 		case 6: // jump false
-			v := 3
+			v := c.InstructionPointer + 3
 			if j == 0 {
 				v = k
 			}
 
-			c.InstructionPointer += v
+			c.InstructionPointer = v
 		case 7: // less than
 			v := 0
 			if j < k {

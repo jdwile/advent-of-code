@@ -51,20 +51,23 @@ func parseOpcode(n int) (int, byte, byte, byte) {
 	kMode := "0"[0]
 	lMode := "0"[0]
 
-	if n > 99 {
-		s := strconv.Itoa(n)
-		if len(s) == 3 {
-			s = "0" + s
-		}
-		if len(s) == 4 {
-			s = "0" + s
-		}
-
-		n = n % 100
-		jMode = s[2]
-		kMode = s[1]
-		lMode = s[0]
+	if n <= 99 {
+		return n, jMode, kMode, lMode
 	}
+
+	s := strconv.Itoa(n)
+	if len(s) == 3 {
+		s = "0" + s
+	}
+	if len(s) == 4 {
+		s = "0" + s
+	}
+
+	n = n % 100
+	jMode = s[2]
+	kMode = s[1]
+	lMode = s[0]
+
 	return n, jMode, kMode, lMode
 }
 
@@ -86,43 +89,50 @@ func (c CPU) ExecuteProgram() CPU {
 				loop = false
 				break
 			}
+
 			j = chooseSetMode(jMode, c.Memory[c.InstructionPointer+1], c)
 			k = c.Input[0]
 			c.Memory[j] = k
-			if len(c.Input) <= 1 {
-				c.Input = []int{}
-			} else {
-				c.Input = c.Input[1:]
+
+			v := []int{}
+			if len(c.Input) > 1 {
+				v = c.Input[1:]
 			}
+
+			c.Input = v
 			c.InstructionPointer += 2
 		case 4: // output
 			c.Output = append(c.Output, j)
 			c.InstructionPointer += 2
 		case 5: // jump true
+			v := 3
 			if j != 0 {
-				c.InstructionPointer = k
-			} else {
-				c.InstructionPointer += 3
+				v = k
 			}
+
+			c.InstructionPointer += v
 		case 6: // jump false
+			v := 3
 			if j == 0 {
-				c.InstructionPointer = k
-			} else {
-				c.InstructionPointer += 3
+				v = k
 			}
+
+			c.InstructionPointer += v
 		case 7: // less than
+			v := 0
 			if j < k {
-				c.Memory[l] = 1
-			} else {
-				c.Memory[l] = 0
+				v = 1
 			}
+
+			c.Memory[l] = v
 			c.InstructionPointer += 4
 		case 8: // equal to
+			v := 0
 			if j == k {
-				c.Memory[l] = 1
-			} else {
-				c.Memory[l] = 0
+				v = 1
 			}
+
+			c.Memory[l] = v
 			c.InstructionPointer += 4
 		case 9: // adjust relative base
 			c.RelativeBase += j

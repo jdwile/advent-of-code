@@ -114,7 +114,7 @@ func (c CPU) executeProgram() CPU {
 			c.Memory[chooseSetMode(lMode, l, c)] = chooseValueMode(jMode, j, c) * chooseValueMode(kMode, k, c)
 			c.InstructionPointer += 4
 		case 3: // input
-			if (len(c.Input) == 0) {
+			if len(c.Input) == 0 {
 				loop = false
 				break
 			}

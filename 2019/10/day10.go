@@ -120,31 +120,27 @@ func SolvePartTwo(p []Point, s Point) {
 	defer utils.TimeTrack(time.Now(), "Day 10: Part 2")
 
 	sortedPoints := SortPoints(p, s)
-	for i := range sortedPoints {
-		fmt.Println(i, p[i], PointMeasure(p[i], s))
-	}
 
 	start := 0
-	for math.Abs(PointMeasure(p[start], s)-(-math.Pi/2)) > 0.00001 {
+	for math.Abs(PointMeasure(sortedPoints[start], s)-(-math.Pi/2)) > 0.00001 {
 		start += 1
 	}
-	fmt.Println("starting point", p[start])
 
 	i := start
 	removedCount := 0
 	lastRemoved := s
 
-	for removedCount < 10 {
-		for p[i] == lastRemoved || (PointMeasure(p[i], s) == PointMeasure(lastRemoved, s)) {
-			fmt.Println("skipping", p[i])
-			i = (i + 1) % len(p)
+	for removedCount < 200 {
+		for sortedPoints[i] == lastRemoved || (PointMeasure(sortedPoints[i], s) == PointMeasure(lastRemoved, s)) {
+			i = (i + 1) % len(sortedPoints)
 		}
 
-		lastRemoved = p[i]
+		lastRemoved = sortedPoints[i]
 		removedCount++
-		fmt.Println(removedCount, p[i])
-		copy(p[i:], p[i+1:])
-		p[len(p)-1] = Point{}
-		p = p[:len(p)-1]
+
+		copy(sortedPoints[i:], sortedPoints[i+1:])
+		sortedPoints[len(sortedPoints)-1] = Point{}
+		sortedPoints = sortedPoints[:len(sortedPoints)-1]
 	}
+	fmt.Println(removedCount, lastRemoved)
 }

@@ -4,16 +4,16 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/jdwile/advent-of-code/2019/utils"
-	"os"
 	"math"
+	"os"
 	// "strconv"
 	"strings"
 	"time"
 )
 
 type Point struct {
-	X      float64
-	Y      float64
+	X float64
+	Y float64
 }
 
 func Abs(x int) int {
@@ -31,18 +31,18 @@ func Max(x, y int) int {
 }
 
 func SortPoints(p []Point, base Point) []Point {
-	for i := 0; i < len(p) - 1; i++ {
+	for i := 0; i < len(p)-1; i++ {
 		for j := i + 1; j < len(p); j++ {
-			iVal := math.Atan2(p[i].Y - base.Y, p[i].X - base.X)
-			jVal := math.Atan2(p[j].Y - base.Y, p[j].X - base.X)
+			iVal := math.Atan2(p[i].Y-base.Y, p[i].X-base.X)
+			jVal := math.Atan2(p[j].Y-base.Y, p[j].X-base.X)
 
 			if jVal < iVal {
 				temp := p[i]
 				p[i] = p[j]
 				p[j] = temp
 			} else if jVal == iVal {
-				iDist := math.Pow(p[i].X - base.X, 2) + math.Pow(p[i].Y - base.Y, 2)
-				jDist := math.Pow(p[j].X - base.X, 1) + math.Pow(p[j].Y - base.Y, 2)
+				iDist := math.Pow(p[i].X-base.X, 2) + math.Pow(p[i].Y-base.Y, 2)
+				jDist := math.Pow(p[j].X-base.X, 1) + math.Pow(p[j].Y-base.Y, 2)
 
 				if jDist < iDist {
 					temp := p[i]
@@ -52,7 +52,7 @@ func SortPoints(p []Point, base Point) []Point {
 			}
 		}
 	}
-	return p;
+	return p
 }
 
 func main() {
@@ -88,15 +88,15 @@ func SolvePartOne(p []Point) Point {
 	m := 0
 	var mP Point
 
-	for _,p1 := range p {
+	for _, p1 := range p {
 		slopes := make(map[float64]bool)
 		c := 0
-		for _,p2 := range p {
+		for _, p2 := range p {
 			if p1 == p2 {
 				continue
 			}
 
-			s := math.Atan2(p2.Y - p1.Y, p2.X - p1.X)
+			s := math.Atan2(p2.Y-p1.Y, p2.X-p1.X)
 			if !slopes[s] {
 				slopes[s] = true
 				c += 1
@@ -113,20 +113,38 @@ func SolvePartOne(p []Point) Point {
 }
 
 func PointMeasure(a Point, b Point) float64 {
-	return math.Atan2(a.Y - b.Y, a.X - b.X)
+	return math.Atan2(a.Y-b.Y, a.X-b.X)
 }
 
 func SolvePartTwo(p []Point, s Point) {
 	defer utils.TimeTrack(time.Now(), "Day 10: Part 2")
-	
+
 	sortedPoints := SortPoints(p, s)
 	for i := range sortedPoints {
 		fmt.Println(i, p[i], PointMeasure(p[i], s))
 	}
 
 	start := 0
-	for math.Abs(PointMeasure(p[start], s) - (-math.Pi/2)) > 0.00001 {
+	for math.Abs(PointMeasure(p[start], s)-(-math.Pi/2)) > 0.00001 {
 		start += 1
 	}
 	fmt.Println("starting point", p[start])
+
+	i := start
+	removedCount := 0
+	lastRemoved := s
+
+	for removedCount < 10 {
+		for p[i] == lastRemoved || (PointMeasure(p[i], s) == PointMeasure(lastRemoved, s)) {
+			fmt.Println("skipping", p[i])
+			i = (i + 1) % len(p)
+		}
+
+		lastRemoved = p[i]
+		removedCount++
+		fmt.Println(removedCount, p[i])
+		copy(p[i:], p[i+1:])
+		p[len(p)-1] = Point{}
+		p = p[:len(p)-1]
+	}
 }

@@ -3,12 +3,13 @@ package main
 import (
 	"bufio"
 	"fmt"
-	. "github.com/jdwile/advent-of-code/2019/intcode-cpu"
-	"github.com/jdwile/advent-of-code/2019/utils"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	cpu "github.com/jdwile/advent-of-code/2019/intcode-cpu"
+	"github.com/jdwile/advent-of-code/2019/utils"
 )
 
 func main() {
@@ -40,7 +41,7 @@ func solvePartOne() {
 	m[1] = 12
 	m[2] = 2
 
-	c := ConstructCPU(m)
+	c := cpu.ConstructCPU(m)
 	c = c.ExecuteProgram()
 	fmt.Println(c.Memory[0])
 }
@@ -56,7 +57,7 @@ func solvePartTwo() {
 			m[1] = noun
 			m[2] = verb
 
-			c := ConstructCPU(m)
+			c := cpu.ConstructCPU(m)
 			c = c.ExecuteProgram()
 
 			if c.Memory[0] == target {

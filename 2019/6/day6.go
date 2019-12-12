@@ -3,10 +3,11 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/jdwile/advent-of-code/2019/utils"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/jdwile/advent-of-code/2019/utils"
 )
 
 func main() {

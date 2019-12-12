@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/jdwile/advent-of-code/2019/utils"
 	"strconv"
 	"time"
+
+	"github.com/jdwile/advent-of-code/2019/utils"
 )
 
 func main() {

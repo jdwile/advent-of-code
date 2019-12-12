@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	. "github.com/jdwile/advent-of-code/2019/intcode-cpu"
+	cpu "github.com/jdwile/advent-of-code/2019/intcode-cpu"
 	"github.com/jdwile/advent-of-code/2019/utils"
 )
 
@@ -41,7 +41,7 @@ func ReadInput() map[int]int {
 	return m
 }
 
-func Paint(g map[Point]rune, c CPU, robot Point, startingColor int) map[Point]rune {
+func Paint(g map[Point]rune, c cpu.CPU, robot Point, startingColor int) map[Point]rune {
 	dirs := []string{"UP", "RIGHT", "DOWN", "LEFT"}
 	dxys := []Point{Point{0, 1}, Point{1, 0}, Point{0, -1}, Point{-1, 0}}
 
@@ -99,7 +99,7 @@ func SolvePart1(m map[int]int) {
 	}
 
 	g := make(map[Point]rune)
-	c := ConstructCPU(memory)
+	c := cpu.ConstructCPU(memory)
 	robot := Point{0, 0}
 
 	g = Paint(g, c, robot, 0)
@@ -115,7 +115,7 @@ func SolvePart2(m map[int]int) {
 	}
 
 	g := make(map[Point]rune)
-	c := ConstructCPU(memory)
+	c := cpu.ConstructCPU(memory)
 	robot := Point{0, 0}
 
 	g = Paint(g, c, robot, 1)

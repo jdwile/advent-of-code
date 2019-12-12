@@ -3,12 +3,13 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/jdwile/advent-of-code/2019/intcode-cpu"
-	"github.com/jdwile/advent-of-code/2019/utils"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	cpu "github.com/jdwile/advent-of-code/2019/intcode-cpu"
+	"github.com/jdwile/advent-of-code/2019/utils"
 )
 
 func main() {

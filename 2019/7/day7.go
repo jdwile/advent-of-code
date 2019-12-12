@@ -3,13 +3,14 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/ernestosuarez/itertools"
-	. "github.com/jdwile/advent-of-code/2019/intcode-cpu"
-	"github.com/jdwile/advent-of-code/2019/utils"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/ernestosuarez/itertools"
+	cpu "github.com/jdwile/advent-of-code/2019/intcode-cpu"
+	"github.com/jdwile/advent-of-code/2019/utils"
 )
 
 func main() {
@@ -50,7 +51,7 @@ func solvePart1(input []int) {
 	for v := range itertools.PermutationsInt(input, len(input)) {
 		d := 0
 		for i := range []string{"A", "B", "C", "D", "E"} {
-			c := ConstructCPU(m)
+			c := cpu.ConstructCPU(m)
 			c.Input = []int{v[i], d}
 			c = c.ExecuteProgram()
 			d = c.Output[0]
@@ -70,9 +71,9 @@ func solvePart2(input []int) {
 	for v := range itertools.PermutationsInt(input, len(input)) {
 		var lastE int
 		halt := false
-		cpus := make([]CPU, 5)
+		cpus := make([]cpu.CPU, 5)
 		for i, j := range v {
-			cpus[i] = ConstructCPU(m)
+			cpus[i] = cpu.ConstructCPU(m)
 			if i == 0 {
 				cpus[i].Input = []int{j, 0}
 			} else {

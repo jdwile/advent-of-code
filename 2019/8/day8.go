@@ -3,11 +3,12 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/jdwile/advent-of-code/2019/utils"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/jdwile/advent-of-code/2019/utils"
 )
 
 type Image struct {

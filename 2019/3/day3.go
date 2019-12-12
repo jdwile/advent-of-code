@@ -3,12 +3,13 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/jdwile/advent-of-code/2019/utils"
 	"math"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/jdwile/advent-of-code/2019/utils"
 )
 
 type Point struct {

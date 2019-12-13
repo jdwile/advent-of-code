@@ -65,8 +65,7 @@ func Paint(a []int, g map[Point]int) (score int) {
 
 	// xMax := 34
 	// yMax := 24
-	// time.Sleep(10 * time.Millisecond)
-	// fmt.Println("\u001b[2J")
+	// time.Sleep(20 * time.Millisecond)
 	// fmt.Println("\u001b[H")
 	// for y := 0; y <= yMax; y++ {
 	// 	res := ""
@@ -75,13 +74,13 @@ func Paint(a []int, g map[Point]int) (score int) {
 	// 		case 0:
 	// 			res += " "
 	// 		case 1:
-	// 			res += "▓"
+	// 			res += "\033[1;35m▓\033[0m"
 	// 		case 2:
-	// 			res += "□"
+	// 			res += "\033[1;34m□\033[0m"
 	// 		case 3:
-	// 			res += "="
+	// 			res += "\033[1;36m=\033[0m"
 	// 		case 4:
-	// 			res += "O"
+	// 			res += "\033[1;33mO\033[0m"
 	// 		}
 	// 	}
 	// 	fmt.Println(res)
@@ -130,6 +129,7 @@ func SolvePartTwo(m map[int]int) {
 	c := cpu.ConstructCPU(memory)
 	c = c.ExecuteProgram()
 
+	// fmt.Println("\u001b[2J")
 	score = Paint(c.Output, g)
 	c.Output = make([]int, 0)
 

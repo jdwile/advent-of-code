@@ -65,6 +65,9 @@ func Paint(a []int, g map[Point]int) (score int) {
 
 	// xMax := 34
 	// yMax := 24
+	// time.Sleep(10 * time.Millisecond)
+	// fmt.Println("\u001b[2J")
+	// fmt.Println("\u001b[H")
 	// for y := 0; y <= yMax; y++ {
 	// 	res := ""
 	// 	for x := 0; x <= xMax; x++ {

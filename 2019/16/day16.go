@@ -18,13 +18,6 @@ func Abs(n int) int {
 	return n
 }
 
-func Min(x, y int) int {
-	if x > y {
-		return y
-	}
-	return x
-}
-
 func main() {
 	i := ReadInput()
 	SolvePartOne(i)

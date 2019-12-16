@@ -66,7 +66,6 @@ func SolvePartOne(signal []int) {
 func SolvePartTwo(a []int) {
 	defer utils.TimeTrack(time.Now(), "Day 16: Part 2")
 
-	// fmt.Println(a)
 	signal := ""
 	for _, n := range a {
 		signal += strconv.Itoa(n)
@@ -88,9 +87,11 @@ func SolvePartTwo(a []int) {
 			output[len(output)-1-i] = d % 10
 		}
 	}
+
 	o := ""
 	for i := 0; i < 8; i++ {
 		o += strconv.Itoa(output[i])
 	}
+
 	fmt.Println(o)
 }

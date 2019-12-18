@@ -323,9 +323,16 @@ func GetShortestPaths(g map[Point]string, p map[string]Point) map[string]map[str
 	SHORTEST_PATHS := make(map[string]map[string][]Point)
 
 	for p1 := range p {
+		if p1[0] >= 'A' && p1[0] <= 'Z' {
+			continue
+		}
 		p1Paths := make(map[string][]Point)
 		for p2 := range p {
 			if p1 == p2 {
+				continue
+			}
+
+			if p2[0] >= 'A' && p2[0] <= 'Z' {
 				continue
 			}
 
@@ -335,6 +342,36 @@ func GetShortestPaths(g map[Point]string, p map[string]Point) map[string]map[str
 	}
 
 	return SHORTEST_PATHS
+}
+
+func GetKeyGraph(g map[Point]string, p map[string]Point) map[string][]string {
+	KEY_GRAPH := make(map[string][]string)
+
+	var Q []string
+	visited := make(map[string]bool)
+	Q = append(Q, "@")
+
+	for len(Q) > 0 {
+		c := Q[0]
+
+		if len(Q) == 1 {
+			Q = make([]string, 0)
+		} else {
+			Q = Q[1:]
+		}
+
+		visited[c] = true
+		keys := make([]string, 0)
+		for k := range getAvailableKeysAndDoors(g, p[c]) {
+			if !visited[k] {
+				keys = append(keys, k)
+				Q = append(Q, k)
+			}
+		}
+		KEY_GRAPH[c] = keys
+	}
+
+	return KEY_GRAPH
 }
 
 func CollectAllKeys(respond chan<- int, cur Point, g map[Point]string, p map[string]Point, SHORTEST_PATHS map[string]map[string][]Point) {
@@ -405,16 +442,17 @@ func CollectAllKeys(respond chan<- int, cur Point, g map[Point]string, p map[str
 func SolvePartOne(g map[Point]string, p map[string]Point) {
 	defer utils.TimeTrack(time.Now(), "Day 18: Part 1")
 	fmt.Println("getting shortest paths..")
-	SHORTEST_PATHS := GetShortestPaths(g, p)
+	// SHORTEST_PATHS := GetShortestPaths(g, p)
+	KEY_GRAPH := GetKeyGraph(g, p)
 	fmt.Println("Got shortest paths! getting distance from key collection..")
-
-	// PrintGrid(g)
+	fmt.Println(KEY_GRAPH)
+	PrintGrid(g)
+	// fmt.Println(SHORTEST_PATHS)
 	// fmt.Println("AVAILABLE KEYS", getAvailableKeys(g, p["@"]))
-	// fmt.Println(ShortestPath(g, p["@"], p["b"]))
-	respond := make(chan int)
-	go CollectAllKeys(respond, p["@"], g, p, SHORTEST_PATHS)
+	// respond := make(chan int)
+	// go CollectAllKeys(respond, p["@"], g, p, SHORTEST_PATHS)
 
-	dist := <-respond
-	fmt.Println("DISTANCE:", dist)
+	// dist := <-respond
+	// fmt.Println("DISTANCE:", dist)
 
 }

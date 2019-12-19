@@ -63,7 +63,6 @@ func GetSquare(resp chan<- string, m map[int]int, loc Point) {
 }
 
 func GetTractorBeam(m map[int]int, size int) map[Point]string {
-	defer utils.TimeTrack(time.Now(), "Get tractor beam")
 	grid := make(map[Point]string)
 
 	workerChans := make([][]chan string, 0)
@@ -103,20 +102,20 @@ func SolvePartOne(m map[int]int) {
 	count := 0
 
 	for y := 0; y < 50; y++ {
-		o := ""
+		// o := ""
 		for x := 0; x < 50; x++ {
-			o += grid[Point{x, y}]
+			// o += grid[Point{x, y}]
 			if grid[Point{x, y}] == "#" {
 				count += 1
 			}
 		}
-		fmt.Println(o)
+		// fmt.Println(o)
 	}
 	fmt.Println(count)
 }
 
 func SolvePartTwo(m map[int]int) {
-	defer utils.TimeTrack(time.Now(), "Day 19: Part 1")
+	defer utils.TimeTrack(time.Now(), "Day 19: Part 2")
 
 	GOAL_SIZE := 100
 

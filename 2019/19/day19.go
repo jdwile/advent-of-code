@@ -41,31 +41,55 @@ func ReadInput() map[int]int {
 	return m
 }
 
+func GetSquare(resp chan<- string, m map[int]int, loc Point) {
+	memory := make(map[int]int)
+	for e := range m {
+		memory[e] = m[e]
+	}
+	c := cpu.ConstructCPU(memory)
+
+	c.Input = []int{loc.X, loc.Y}
+
+	c = c.ExecuteProgram()
+
+	r := c.Output[0]
+	c.Output = []int{}
+
+	if r == 0 {
+		resp <- "."
+	} else {
+		resp <- "#"
+	}
+}
+
 func GetTractorBeam(m map[int]int, size int) map[Point]string {
+	defer utils.TimeTrack(time.Now(), "Get tractor beam")
 	grid := make(map[Point]string)
+
+	workerChans := make([][]chan string, 0)
+
+	for y := 0; y < size; y++ {
+		chans := make([]chan string, 0)
+		for x := 0; x < size; x++ {
+			c := make(chan string)
+			chans = append(chans, c)
+		}
+
+		workerChans = append(workerChans, chans)
+	}
 
 	for y := 0; y < size; y++ {
 		for x := 0; x < size; x++ {
-			memory := make(map[int]int)
-			for e := range m {
-				memory[e] = m[e]
-			}
-			c := cpu.ConstructCPU(memory)
+			p := Point{x, y}
+			go GetSquare(workerChans[y][x], m, p)
+		}
+	}
 
-			c.Input = []int{x, y}
-
-			c = c.ExecuteProgram()
-
-			r := c.Output[0]
-			c.Output = []int{}
-
-			loc := Point{x, y}
-
-			if r == 0 {
-				grid[loc] = "."
-			} else {
-				grid[loc] = "#"
-			}
+	for y := 0; y < size; y++ {
+		for x := 0; x < size; x++ {
+			p := Point{x, y}
+			r := <-workerChans[y][x]
+			grid[p] = r
 		}
 	}
 
@@ -94,24 +118,38 @@ func SolvePartOne(m map[int]int) {
 func SolvePartTwo(m map[int]int) {
 	defer utils.TimeTrack(time.Now(), "Day 19: Part 1")
 
-	size := 1000
-	grid := GetTractorBeam(m, size)
+	GOAL_SIZE := 100
 
-	rightCorner := size - 1
-	for y := size - 1; y > 0; y-- {
-		leftCorner := 0
-		fmt.Println(y)
-		for grid[Point{rightCorner, y}] == "." {
-			rightCorner--
+	rightCorner := 0
+	y := 5
+	for true {
+		cR := make(chan string)
+		go GetSquare(cR, m, Point{rightCorner, y})
+		rightCornerTile := <-cR
+
+		for rightCornerTile != "#" {
+			rightCorner++
+			cR = make(chan string)
+			go GetSquare(cR, m, Point{rightCorner, y})
+			rightCornerTile = <-cR
 		}
-
-		for grid[Point{leftCorner, y + 100}] == "." {
-			leftCorner++
+		for rightCornerTile == "#" {
+			rightCorner++
+			cR = make(chan string)
+			go GetSquare(cR, m, Point{rightCorner, y})
+			rightCornerTile = <-cR
 		}
+		rightCorner--
 
-		if rightCorner-leftCorner == 100 {
+		leftCorner := rightCorner - (GOAL_SIZE - 1)
+		cL := make(chan string)
+		go GetSquare(cL, m, Point{leftCorner, y + (GOAL_SIZE - 1)})
+		leftCornerTile := <-cL
+
+		if leftCornerTile == "#" {
 			fmt.Println(leftCorner*10000 + y)
 			break
 		}
+		y++
 	}
 }

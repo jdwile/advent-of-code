@@ -73,9 +73,12 @@ func parseOpcode(n int) (int, byte, byte, byte) {
 	return n, jMode, kMode, lMode
 }
 
-func (c CPU) ExecuteProgram() CPU {
-	loop := true
-	for loop {
+func (c CPU) ExecuteProgram(t ...int) CPU {
+	count := -1
+	if len(t) > 0 {
+		count = t[0]
+	}
+	for count != 0 {
 		n, jMode, kMode, lMode := parseOpcode(c.Memory[c.InstructionPointer])
 		j, k, l := chooseValues(c, jMode, kMode, lMode)
 
@@ -88,7 +91,7 @@ func (c CPU) ExecuteProgram() CPU {
 			c.InstructionPointer += 4
 		case 3: // input
 			if len(c.Input) == 0 {
-				loop = false
+				count = 0
 				break
 			}
 
@@ -141,9 +144,11 @@ func (c CPU) ExecuteProgram() CPU {
 			c.InstructionPointer += 2
 		case 99: // end
 			c.Halted = true
-			loop = false
+			count = 0
 			break
 		}
+
+		count--
 	}
 
 	return c

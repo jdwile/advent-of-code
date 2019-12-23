@@ -11,10 +11,11 @@ type CPU struct {
 	InstructionPointer int
 	RelativeBase       int
 	Halted             bool
+	Idle               bool
 }
 
 func ConstructCPU(memory map[int]int) CPU {
-	return CPU{memory, []int{}, []int{}, 0, 0, false}
+	return CPU{memory, []int{}, []int{}, 0, 0, false, false}
 }
 
 func chooseValueMode(mode byte, i int, c CPU) int {
@@ -90,6 +91,7 @@ func (c CPU) ExecuteProgram(t ...int) CPU {
 			c.Memory[l] = j * k
 			c.InstructionPointer += 4
 		case 3: // input
+			c.Idle = true
 			if len(c.Input) == 0 {
 				count = 1
 				break
@@ -98,6 +100,9 @@ func (c CPU) ExecuteProgram(t ...int) CPU {
 			j = chooseSetMode(jMode, c.Memory[c.InstructionPointer+1], c)
 			k = c.Input[0]
 			c.Memory[j] = k
+			if k != -1 {
+				c.Idle = false
+			}
 
 			v := []int{}
 			if len(c.Input) > 1 {

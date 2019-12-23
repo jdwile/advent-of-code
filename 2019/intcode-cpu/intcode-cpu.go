@@ -91,7 +91,7 @@ func (c CPU) ExecuteProgram(t ...int) CPU {
 			c.InstructionPointer += 4
 		case 3: // input
 			if len(c.Input) == 0 {
-				count = 0
+				count = 1
 				break
 			}
 
@@ -144,8 +144,7 @@ func (c CPU) ExecuteProgram(t ...int) CPU {
 			c.InstructionPointer += 2
 		case 99: // end
 			c.Halted = true
-			count = 0
-			break
+			count = 1
 		}
 
 		count--

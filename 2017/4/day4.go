@@ -78,17 +78,15 @@ func SolvePartOne(passphrases [][]string) int {
 func SolvePartTwo(passphrases [][]string) int {
 	defer utils.TimeTrack(time.Now(), "Day 4: Part 2")
 
-	for i := range passphrases {
-		for j := range passphrases[i] {
-			l := strings.Split(passphrases[i][j], "")
-			sort.Strings(l)
-			passphrases[i][j] = strings.Join(l, "")
-		}
-	}
-
 	var c int
 
 	for _, passphrase := range passphrases {
+		for j := range passphrase {
+			l := strings.Split(passphrase[j], "")
+			sort.Strings(l)
+			passphrase[j] = strings.Join(l, "")
+		}
+
 		if isValidPassphrase(passphrase) {
 			c++
 		}

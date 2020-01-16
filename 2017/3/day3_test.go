@@ -38,6 +38,10 @@ func testPartOneFunc(input, expected int) func(*testing.T) {
 
 func TestPartTwo(t *testing.T) {
 	defer silence()()
+	t.Run("1", testPartTwoFunc(1, 2))
+	t.Run("22", testPartTwoFunc(22, 23))
+	t.Run("350", testPartTwoFunc(350, 351))
+	t.Run("800", testPartTwoFunc(800, 806))
 }
 
 func testPartTwoFunc(input, expected int) func(*testing.T) {

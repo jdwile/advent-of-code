@@ -28,7 +28,7 @@ func testPartOneFunc(spreadsheet [][]int, expected int) func(*testing.T) {
 	return func(t *testing.T) {
 		actual := SolvePartOne(spreadsheet)
 		if actual != expected {
-			t.Error(fmt.Sprintf("Expected captcha value of %v to be %d but got %d", spreadsheet, expected, actual))
+			t.Error(fmt.Sprintf("Expected value of %v to be %d but got %d", spreadsheet, expected, actual))
 		}
 	}
 }
@@ -42,7 +42,7 @@ func testPartTwoFunc(spreadsheet [][]int, expected int) func(*testing.T) {
 	return func(t *testing.T) {
 		actual := SolvePartTwo(spreadsheet)
 		if actual != expected {
-			t.Error(fmt.Sprintf("Expected captcha value of %v to be %d but got %d", spreadsheet, expected, actual))
+			t.Error(fmt.Sprintf("Expected value of %v to be %d but got %d", spreadsheet, expected, actual))
 		}
 	}
 }

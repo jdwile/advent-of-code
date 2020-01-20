@@ -4,20 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/jdwile/advent-of-code/2017/utils"
+	. "github.com/jdwile/advent-of-code/2017/utils"
 )
-
-func Abs(a int) int {
-	if a < 0 {
-		return -1 * a
-	}
-	return a
-}
-
-type Point struct {
-	X int
-	Y int
-}
 
 func main() {
 	input := 265149
@@ -26,7 +14,7 @@ func main() {
 }
 
 func SolvePartOne(input int) int {
-	defer utils.TimeTrack(time.Now(), "Day 3: Part 1")
+	defer TimeTrack(time.Now(), "Day 3: Part 1")
 
 	x, y := 0, 0
 	n, s := 1, 1
@@ -82,7 +70,7 @@ func getSumNeighbors(grid map[Point]int, pos Point) int {
 }
 
 func SolvePartTwo(input int) int {
-	defer utils.TimeTrack(time.Now(), "Day 3: Part 2")
+	defer TimeTrack(time.Now(), "Day 3: Part 2")
 
 	var x, y int
 	grid := make(map[Point]int)

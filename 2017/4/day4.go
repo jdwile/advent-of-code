@@ -11,20 +11,6 @@ import (
 	"github.com/jdwile/advent-of-code/2017/utils"
 )
 
-func Max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func Min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 func main() {
 	passphrases := readInputFile()
 	fmt.Printf("Part 1 Answer: %d\n\n", SolvePartOne(passphrases))

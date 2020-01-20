@@ -11,20 +11,6 @@ import (
 	"github.com/jdwile/advent-of-code/2017/utils"
 )
 
-func Max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func Min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 func main() {
 	spreadsheet := readInputFile()
 	fmt.Printf("Part 1 Answer: %d\n\n", SolvePartOne(spreadsheet))
@@ -61,8 +47,8 @@ func SolvePartOne(spreadsheet [][]int) int {
 		l, s := row[0], row[0]
 
 		for _, n := range row {
-			l = Max(l, n)
-			s = Min(s, n)
+			l = utils.Max(l, n)
+			s = utils.Min(s, n)
 		}
 
 		res += l - s

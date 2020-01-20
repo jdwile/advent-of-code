@@ -2,25 +2,13 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"testing"
+
+	"github.com/jdwile/advent-of-code/2017/utils"
 )
 
-func silence() func() {
-	null, _ := os.Open(os.DevNull)
-	sout := os.Stdout
-	serr := os.Stderr
-	os.Stdout = null
-	os.Stderr = null
-	return func() {
-		defer null.Close()
-		os.Stdout = sout
-		os.Stderr = serr
-	}
-}
-
 func TestPartOne(t *testing.T) {
-	defer silence()()
+	defer utils.Mute()()
 	t.Run("Given Example", testPartOneFunc([][]int{{5, 1, 9, 5}, {7, 5, 3}, {2, 4, 6, 8}}, 18))
 }
 
@@ -34,7 +22,7 @@ func testPartOneFunc(spreadsheet [][]int, expected int) func(*testing.T) {
 }
 
 func TestPartTwo(t *testing.T) {
-	defer silence()()
+	defer utils.Mute()()
 	t.Run("Given Example", testPartTwoFunc([][]int{{5, 9, 2, 8}, {9, 4, 7, 3}, {3, 8, 6, 5}}, 9))
 }
 

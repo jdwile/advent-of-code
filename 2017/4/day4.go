@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jdwile/advent-of-code/2019/utils"
+	"github.com/jdwile/advent-of-code/2017/utils"
 )
 
 func Max(a, b int) int {

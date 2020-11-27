@@ -1,3 +1,6 @@
-fun main(args: Array<String>) {
-    println("Hello World!")
+fun main() {
+   var ex = problems.example.Example()
+
+   ex.part1()
+   ex.part2()
 }

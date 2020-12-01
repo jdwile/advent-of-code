@@ -3,16 +3,16 @@ package problems.example
 import common.*
 
 class Example : ISolution {
-    override fun part1() {
+    override fun part1(): String {
         val lines = readFileAsInts("${getPath()}/problems/example/ex.in")
 
         var res = 0
         lines.forEach { res += (it / 3) - 2 }
 
-        println("Part 1: $res")
+        return "Part 1: $res"
     }
 
-    override fun part2() {
+    override fun part2(): String {
         val lines = readFileAsInts("${getPath()}/problems/example/ex.in")
 
         var res = 0
@@ -24,6 +24,6 @@ class Example : ISolution {
             } while (cur > 0)
         }
 
-        println("Part 2: $res")
+        return "Part 2: $res"
     }
 }

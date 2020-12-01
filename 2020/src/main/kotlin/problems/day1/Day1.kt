@@ -4,43 +4,38 @@ import common.ISolution
 import common.getPath
 import common.readFileAsInts
 
-class Day1: ISolution {
-    override fun part1() {
+class Day1 : ISolution {
+    override fun part1(): String {
         val lines = readFileAsInts("${getPath()}/problems/day1/1.in")
 
-        println("Part 1: " + getSumTo(lines, 2020))
+        return "Part 1: " + findPairSum(lines, 2020)
     }
 
-    fun getSumTo(lines: ArrayList<Int>, num: Int): Int
-    {
-        for (i in 0 .. lines.size - 2)
-        {
-            for (j in i until lines.size)
-            {
-                val iv = lines[i]
-                val jv = lines[j]
+    override fun part2(): String {
+        val lines = readFileAsInts("${getPath()}/problems/day1/1.in")
 
-                if (iv + jv == num)
-                {
+        for (i in 0 until lines.size - 2) {
+            val res = findPairSum(lines, 2020 - lines[i])
+
+            if (res > -1) {
+                return "Part 2: " + (res * lines[i])
+            }
+        }
+
+        return "uh oh"
+    }
+
+    fun findPairSum(nums: ArrayList<Int>, goal: Int): Int {
+        for (i in 0 until nums.size - 1) {
+            for (j in i until nums.size) {
+                val iv = nums[i]
+                val jv = nums[j]
+
+                if (iv + jv == goal) {
                     return iv * jv
                 }
             }
         }
         return -1
-    }
-
-    override fun part2() {
-        val lines = readFileAsInts("${getPath()}/problems/day1/1.in")
-        var flag = false
-
-        for (i in 0 .. lines.size - 3)
-        {
-            val res = getSumTo(lines, 2020 - lines[i])
-
-            if (res > -1) {
-                println("Part 2: " + (res * lines[i]))
-                break
-            }
-        }
     }
 }

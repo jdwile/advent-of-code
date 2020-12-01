@@ -9,13 +9,16 @@ class Day1: ISolution {
         val lines = readFileAsInts("${getPath()}/problems/day1/1.in")
         var flag = false
 
-        for (i in lines)
+        for (i in 0 .. lines.size - 2)
         {
-            for (j in lines)
+            for (j in i until lines.size)
             {
-                if (i + j == 2020)
+                val iv = lines[i]
+                val jv = lines[j]
+
+                if (iv + jv == 2020)
                 {
-                    println("Part 1: " + (i * j))
+                    println("Part 1: " + (iv * jv))
                     flag = true
                     break
                 }
@@ -28,15 +31,19 @@ class Day1: ISolution {
         val lines = readFileAsInts("${getPath()}/problems/day1/1.in")
         var flag = false
 
-        for (i in lines)
+        for (i in 0 .. lines.size - 3)
         {
-            for (j in lines)
+            for (j in i .. lines.size - 2)
             {
-                for (k in lines)
+                for (k in j until lines.size)
                 {
-                    if (i + j + k == 2020)
+                    val iv = lines[i]
+                    val jv = lines[j]
+                    val kv = lines[k]
+
+                    if (iv + jv + kv == 2020)
                     {
-                        println("Part 2: " + (i * j * k))
+                        println("Part 2: " + (iv * jv * kv))
                         flag = true
                         break
                     }

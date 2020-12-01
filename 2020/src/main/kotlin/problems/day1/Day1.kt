@@ -7,8 +7,12 @@ import common.readFileAsInts
 class Day1: ISolution {
     override fun part1() {
         val lines = readFileAsInts("${getPath()}/problems/day1/1.in")
-        var flag = false
 
+        println("Part 1: " + getSumTo(lines, 2020))
+    }
+
+    fun getSumTo(lines: ArrayList<Int>, num: Int): Int
+    {
         for (i in 0 .. lines.size - 2)
         {
             for (j in i until lines.size)
@@ -16,15 +20,13 @@ class Day1: ISolution {
                 val iv = lines[i]
                 val jv = lines[j]
 
-                if (iv + jv == 2020)
+                if (iv + jv == num)
                 {
-                    println("Part 1: " + (iv * jv))
-                    flag = true
-                    break
+                    return iv * jv
                 }
             }
-            if (flag) break
         }
+        return -1
     }
 
     override fun part2() {
@@ -33,24 +35,12 @@ class Day1: ISolution {
 
         for (i in 0 .. lines.size - 3)
         {
-            for (j in i .. lines.size - 2)
-            {
-                for (k in j until lines.size)
-                {
-                    val iv = lines[i]
-                    val jv = lines[j]
-                    val kv = lines[k]
+            val res = getSumTo(lines, 2020 - lines[i])
 
-                    if (iv + jv + kv == 2020)
-                    {
-                        println("Part 2: " + (iv * jv * kv))
-                        flag = true
-                        break
-                    }
-                }
-                if (flag) break
+            if (res > -1) {
+                println("Part 2: " + (res * lines[i]))
+                break
             }
-            if (flag) break
         }
     }
 }

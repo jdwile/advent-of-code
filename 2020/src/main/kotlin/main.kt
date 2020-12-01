@@ -1,6 +1,6 @@
 fun main() {
-   var ex = problems.example.Example()
+   var d1 = problems.day1.Day1()
 
-   ex.part1()
-   ex.part2()
+   d1.part1()
+   d1.part2()
 }

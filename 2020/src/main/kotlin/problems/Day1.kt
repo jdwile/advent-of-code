@@ -1,24 +1,22 @@
-package problems.day1
+package problems
 
-import common.ISolution
-import common.getPath
-import common.readFileAsInts
+import common.*
 
 class Day1 : ISolution {
     override fun part1(): String {
-        val lines = readFileAsInts("${getPath()}/problems/day1/1.in")
+        val lines = readFileAsInts("${getPath()}/problems/input/1.in")
 
-        return "Part 1: " + findPairSum(lines, 2020)
+        return "Day 1, Part 1: " + findPairSum(lines, 2020)
     }
 
     override fun part2(): String {
-        val lines = readFileAsInts("${getPath()}/problems/day1/1.in")
+        val lines = readFileAsInts("${getPath()}/problems/input/1.in")
 
         for (i in 0 until lines.size - 2) {
             val res = findPairSum(lines, 2020 - lines[i])
 
             if (res > -1) {
-                return "Part 2: " + (res * lines[i])
+                return "Day 1, Part 2: " + (res * lines[i])
             }
         }
 

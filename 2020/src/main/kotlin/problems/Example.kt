@@ -1,19 +1,19 @@
-package problems.example
+package problems
 
 import common.*
 
 class Example : ISolution {
     override fun part1(): String {
-        val lines = readFileAsInts("${getPath()}/problems/example/ex.in")
+        val lines = readFileAsInts("${getPath()}/problems/input/ex.in")
 
         var res = 0
         lines.forEach { res += (it / 3) - 2 }
 
-        return "Part 1: $res"
+        return "Example, Part 1: $res"
     }
 
     override fun part2(): String {
-        val lines = readFileAsInts("${getPath()}/problems/example/ex.in")
+        val lines = readFileAsInts("${getPath()}/problems/input/ex.in")
 
         var res = 0
         lines.forEach {
@@ -24,6 +24,6 @@ class Example : ISolution {
             } while (cur > 0)
         }
 
-        return "Part 2: $res"
+        return "Example, Part 2: $res"
     }
 }

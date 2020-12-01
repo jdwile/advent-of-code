@@ -1,6 +1,14 @@
-fun main() {
-   var d1 = problems.day1.Day1()
+import common.ISolution
+import problems.*
 
-   println(d1.part1())
-   println(d1.part2())
+fun main() {
+   val solutions = ArrayList<ISolution>()
+   solutions.add(Example())
+   solutions.add(Day1())
+   solutions.add(Day2())
+
+   solutions.forEach {
+      println(it.part1())
+      println(it.part2())
+   }
 }

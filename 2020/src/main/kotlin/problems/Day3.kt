@@ -5,7 +5,7 @@ import java.math.BigInteger
 
 class Day3: ISolution {
     override fun part1(): String {
-        val grid = readFile("${getPath()}/problems/input/3.in")
+        val grid = readFileAsCharArray("${getPath()}/problems/input/3.in")
 
         val treeCount = getTreeCount(grid)
 
@@ -13,7 +13,7 @@ class Day3: ISolution {
     }
 
     override fun part2(): String {
-        val grid = readFile("${getPath()}/problems/input/3.in")
+        val grid = readFileAsCharArray("${getPath()}/problems/input/3.in")
 
         var treeCountProduct: BigInteger = BigInteger.ONE
 
@@ -26,7 +26,7 @@ class Day3: ISolution {
         return "Day 3, Part 2: $treeCountProduct"
     }
 
-    private fun getTreeCount(grid: ArrayList<String>, dx: Int = 3, dy: Int = 1): Int {
+    private fun getTreeCount(grid: Array<CharArray>, dx: Int = 3, dy: Int = 1): Int {
         var x = 0
         var y = 0
         var treeCount = 0
@@ -35,7 +35,7 @@ class Day3: ISolution {
             if (grid[y][x] == '#') {
                 treeCount++
             }
-            x = (x + dx) % grid[y].length
+            x = (x + dx) % grid[y].size
             y += dy
         }
 

@@ -4,7 +4,7 @@ import common.*
 
 class Day2: ISolution {
     override fun part1(): String {
-        val lines = readFile("${getPath()}/problems/input/2.in")
+        val lines = readFileAsStrings("${getPath()}/problems/input/2.in")
         var total = 0
 
         lines.forEach {
@@ -20,7 +20,7 @@ class Day2: ISolution {
     }
 
     override fun part2(): String {
-        val lines = readFile("${getPath()}/problems/input/2.in")
+        val lines = readFileAsStrings("${getPath()}/problems/input/2.in")
         var total = 0
 
         lines.forEach {

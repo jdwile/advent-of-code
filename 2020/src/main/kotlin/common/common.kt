@@ -2,20 +2,28 @@ package common
 
 import java.io.File
 
-public fun getPath(): String { return System.getProperty("user.dir") + "/src/main/kotlin" }
+fun getPath(): String { return System.getProperty("user.dir") + "/src/main/kotlin" }
 
-public fun readFile(fileName: String): ArrayList<String> {
-    var res = ArrayList<String>()
+fun readFileAsStrings(fileName: String): ArrayList<String> {
+    val res = ArrayList<String>()
 
     File(fileName).forEachLine { res.add(it) }
 
     return res
 }
 
-public fun readFileAsInts(fileName: String): ArrayList<Int> {
-    var res = ArrayList<Int>()
+fun readFileAsInts(fileName: String): ArrayList<Int> {
+    val res = ArrayList<Int>()
 
-    readFile(fileName).forEach { res.add(it.toInt()) }
+    readFileAsStrings(fileName).forEach { res.add(it.toInt()) }
 
     return res
+}
+
+fun readFileAsCharArray(fileName: String): Array<CharArray> {
+    val res = ArrayList<CharArray>()
+
+    File(fileName).forEachLine { res.add(it.toCharArray()) }
+
+    return res.toTypedArray()
 }

@@ -8,6 +8,7 @@ fun main() {
    solutions.add(Day1())
    solutions.add(Day2())
    solutions.add(Day3())
+   solutions.add(Day4())
 
    solutions.forEach {
       val part1Time = measureTimeMillis {
@@ -21,6 +22,6 @@ fun main() {
       println(" - $part2Time ms")
    }
 
-//   println(solutions[3].part1())
-//   println(solutions[3].part2())
+//   println(solutions[4].part1())
+//   println(solutions[4].part2())
 }

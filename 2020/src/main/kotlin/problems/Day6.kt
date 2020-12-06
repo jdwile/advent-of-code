@@ -8,8 +8,8 @@ class Day6: ISolution {
 
         val res = lines
                 .let(::parseGroups)
-                .map{ it.answers.entries.size }
-                .fold(0) { acc, it -> acc + it }
+                .map { it.reduce(Set<Char>::union).size }
+                .sum()
 
         return "Day 6, Part 1 - $res"
     }
@@ -19,34 +19,26 @@ class Day6: ISolution {
 
         val res = lines
                 .let(::parseGroups)
-                .map { group -> group.answers.count{ it.value == group.size }}
-                .fold(0) { acc, it -> acc + it }
+                .map { it.reduce(Set<Char>::intersect).size }
+                .sum()
 
         return "Day 6, Part 2 - $res"
     }
 
-    private fun parseGroups(entries: List<String>): List<Group> {
-        val groups = ArrayList<Group>()
-        var group = HashMap<String, Int>()
-        var groupSize = 0
+    private fun parseGroups(entries: List<String>): List<List<Set<Char>>> {
+        val groups = ArrayList<ArrayList<Set<Char>>>()
+        var group = ArrayList<Set<Char>>()
 
         entries.forEachIndexed { i, entry ->
             if (entry.isNotEmpty()) {
-                groupSize++
-                entry.toCharArray()
-                        .map{ it.toString() }
-                        .groupingBy { it }.eachCount()
-                        .forEach { group.merge(it.key, it.value, Math::addExact) }
+                group.add(entry.toSet())
             }
             if (entry.isEmpty() || i == entries.lastIndex) {
-                groups.add(Group(group, groupSize))
-                groupSize = 0
-                group = HashMap()
+                groups.add(group)
+                group = ArrayList()
             }
         }
 
         return groups
     }
-
-    private data class Group(val answers: Map<String, Int>, val size: Int)
 }

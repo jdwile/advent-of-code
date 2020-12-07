@@ -2,7 +2,6 @@ package problems
 
 import common.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class Day7: ISolution {
     override fun part1(): String {
@@ -42,7 +41,7 @@ class Day7: ISolution {
             .forEach {
                 processedLines.add(
                         it.replace(" contain ", "-")
-                                .replace("[\\.]|\\sbags|\\sbag".toRegex(), "")
+                                .replace("[.]|\\sbags|\\sbag".toRegex(), "")
                                 .replace(", ", ":")
                 )
             }

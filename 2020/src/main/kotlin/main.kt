@@ -17,6 +17,7 @@ fun main() {
     solutions.add(Day9())
     solutions.add(Day10())
     solutions.add(Day11())
+    solutions.add(Day12())
 
     val dec = DecimalFormat("###,###.##")
     dec.roundingMode = RoundingMode.HALF_UP

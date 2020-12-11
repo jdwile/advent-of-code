@@ -2,7 +2,7 @@ package problems
 
 import common.*
 
-class Day8: ISolution {
+class Day8 : ISolution {
     override fun part1(): String {
         val program = readFileAsStrings("${getPath()}/problems/input/8.in")
                 .map { it.split(" ") }

@@ -2,7 +2,7 @@ package problems
 
 import common.*
 
-class Day5: ISolution {
+class Day5 : ISolution {
     override fun part1(): String {
         val barcodes = readFileAsStrings("${getPath()}/problems/input/5.in")
 

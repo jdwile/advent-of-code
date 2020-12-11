@@ -2,14 +2,14 @@ package problems
 
 import common.*
 
-class Day9: ISolution {
+class Day9 : ISolution {
     private var target: Long = 0
 
     override fun part1(): String {
         val nums = readFileAsLongs("${getPath()}/problems/input/9.in")
 
         for (i in 25 until nums.size) {
-            val prevList = nums.subList(i-25, i)
+            val prevList = nums.subList(i - 25, i)
             val cur = nums[i]
 
             if (prevList.find { (cur - it) in prevList && it != cur } == null) {

@@ -3,7 +3,7 @@ package problems
 import common.*
 import java.math.BigInteger
 
-class Day10: ISolution {
+class Day10 : ISolution {
     override fun part1(): String {
         val adapters = readFileAsInts("${getPath()}/problems/input/10.in")
         adapters.sort()

@@ -3,7 +3,7 @@ package problems
 import common.*
 import java.math.BigInteger
 
-class Day3: ISolution {
+class Day3 : ISolution {
     override fun part1(): String {
         val grid = readFileAsCharArray("${getPath()}/problems/input/3.in")
 

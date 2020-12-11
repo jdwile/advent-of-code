@@ -3,7 +3,7 @@ package problems
 import common.*
 import java.io.File
 
-class Day4: ISolution {
+class Day4 : ISolution {
     override fun part1(): String {
         val passports = readPassports()
 
@@ -55,7 +55,7 @@ class Day4: ISolution {
                 && passport["iyr"]?.toInt() in 2010..2020
                 && passport["eyr"]?.toInt() in 2020..2030
                 && (passport["hgt"]!!.matches("^1([5-8][0-9]|9[0-3])cm$".toRegex())
-                    || passport["hgt"]!!.matches("^(59|6[0-9]|7[0-6])in$".toRegex()))
+                || passport["hgt"]!!.matches("^(59|6[0-9]|7[0-6])in$".toRegex()))
                 && passport["hcl"]!!.matches("^#([0-9]|[a-f]){6}$".toRegex())
                 && passport["ecl"] in arrayOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth")
                 && passport["pid"]!!.matches("^([0-9]){9}$".toRegex())

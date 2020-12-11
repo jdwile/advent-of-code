@@ -2,7 +2,7 @@ package problems
 
 import common.*
 
-class Day6: ISolution {
+class Day6 : ISolution {
     override fun part1(): String {
         val lines = readFileAsStrings("${getPath()}/problems/input/6.in")
 

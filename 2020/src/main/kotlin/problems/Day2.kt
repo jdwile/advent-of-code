@@ -2,7 +2,7 @@ package problems
 
 import common.*
 
-class Day2: ISolution {
+class Day2 : ISolution {
     override fun part1(): String {
         val lines = readFileAsStrings("${getPath()}/problems/input/2.in")
         var total = 0
@@ -40,6 +40,6 @@ class Day2: ISolution {
     }
 
     private fun isValidPassword2(low: Int, high: Int, letter: Char, password: String): Boolean {
-        return (password[low-1] == letter).xor(password[high-1] == letter)
+        return (password[low - 1] == letter).xor(password[high - 1] == letter)
     }
 }

@@ -3,7 +3,7 @@ package problems
 import common.*
 import kotlin.collections.ArrayList
 
-class Day7: ISolution {
+class Day7 : ISolution {
     override fun part1(): String {
         val lines = readFileAsStrings("${getPath()}/problems/input/7.in")
 
@@ -38,16 +38,16 @@ class Day7: ISolution {
         val processedLines = ArrayList<String>()
 
         lines.filter { !it.contains("no other") }
-            .forEach {
-                processedLines.add(
-                        it.replace(" contain ", "-")
-                                .replace("[.]|\\sbags|\\sbag".toRegex(), "")
-                                .replace(", ", ":")
-                )
-            }
+                .forEach {
+                    processedLines.add(
+                            it.replace(" contain ", "-")
+                                    .replace("[.]|\\sbags|\\sbag".toRegex(), "")
+                                    .replace(", ", ":")
+                    )
+                }
 
         return processedLines.map { it.split("-", ":") }
-                .map { it[0] to Bag(it[0], toInnerBags(it.subList(1, it.size)))}.toMap()
+                .map { it[0] to Bag(it[0], toInnerBags(it.subList(1, it.size))) }.toMap()
     }
 
     private fun toInnerBags(bags: List<String>) =

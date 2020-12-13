@@ -3,7 +3,9 @@ package common
 import java.io.File
 import java.math.BigInteger
 
-fun getPath(): String { return System.getProperty("user.dir") + "/src/main/kotlin" }
+fun getPath(): String {
+    return System.getProperty("user.dir") + "/src/main/kotlin"
+}
 
 fun readFileAsStrings(fileName: String): ArrayList<String> {
     val res = ArrayList<String>()
@@ -35,4 +37,14 @@ fun readFileAsCharArray(fileName: String): Array<CharArray> {
     File(fileName).forEachLine { res.add(it.toCharArray()) }
 
     return res.toTypedArray()
+}
+
+
+fun <T> Sequence<T>.takeWhileInclusive(pred: (T) -> Boolean): Sequence<T> {
+    var shouldContinue = true
+    return takeWhile {
+        val result = shouldContinue
+        shouldContinue = pred(it)
+        result
+    }
 }

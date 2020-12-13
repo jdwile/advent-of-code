@@ -19,6 +19,7 @@ fun main() {
     solutions.add(Day11())
     solutions.add(Day12())
     solutions.add(Day13())
+    solutions.add(Day14())
 
     val dec = DecimalFormat("###,###.##")
     dec.roundingMode = RoundingMode.HALF_UP
@@ -37,6 +38,6 @@ fun main() {
         println(" - " + dec.format(part2Time / 50 / 1000000) + "ms")
     }
 
-//      println(solutions[12].part1())
-//      println(solutions[12].part2())
+//      println(solutions[13].part1())
+//      println(solutions[13].part2())
 }

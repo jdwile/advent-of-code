@@ -1,10 +1,12 @@
-package problems
+package main.kotlin.problems
 
-import common.*
+import main.kotlin.common.ISolution
+import main.kotlin.common.readFileAsStrings
+import main.kotlin.common.takeWhileInclusive
 
 class Day13 : ISolution {
     override fun part1(): String {
-        val input = readFileAsStrings("${getPath()}/problems/input/13.in")
+        val input = readFileAsStrings("13.in")
         val earlyTime = input[0].toInt()
         val busLines = input[1].split(",")
                 .filter { it != "x" }
@@ -29,7 +31,7 @@ class Day13 : ISolution {
     }
 
     override fun part2(): String {
-        val input = readFileAsStrings("${getPath()}/problems/input/13.in")
+        val input = readFileAsStrings("13.in")
         val busLines = input[1].split(",")
         val buses = busLines.zip(busLines.indices)
                 .filter { it.first != "x" }

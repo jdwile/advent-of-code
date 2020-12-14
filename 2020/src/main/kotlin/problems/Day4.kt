@@ -1,6 +1,7 @@
-package problems
+package main.kotlin.problems
 
-import common.*
+import main.kotlin.common.ISolution
+import main.kotlin.common.getPath
 import java.io.File
 
 class Day4 : ISolution {
@@ -24,7 +25,7 @@ class Day4 : ISolution {
         var res = ArrayList<HashMap<String, String>>()
         var passport = HashMap<String, String>()
 
-        File("${getPath()}/problems/input/4.in").forEachLine {
+        File("${getPath()}4.in").forEachLine {
             if (it.isEmpty()) {
                 res.add(passport)
                 passport = HashMap()

@@ -1,10 +1,11 @@
-package problems
+package main.kotlin.problems
 
-import common.*
+import main.kotlin.common.ISolution
+import main.kotlin.common.readFileAsCharArray
 
 class Day11 : ISolution {
     override fun part1(): String {
-        var seats = readFileAsCharArray("${getPath()}/problems/input/11.in")
+        var seats = readFileAsCharArray("11.in")
         seats = runGameOfAirplaneSeats(seats)
 
         val res = seats.hash().count { it == '#' }
@@ -13,7 +14,7 @@ class Day11 : ISolution {
     }
 
     override fun part2(): String {
-        var seats = readFileAsCharArray("${getPath()}/problems/input/11.in")
+        var seats = readFileAsCharArray("11.in")
         seats = runGameOfAirplaneSeats(seats, true)
 
         val res = seats.hash().count { it == '#' }

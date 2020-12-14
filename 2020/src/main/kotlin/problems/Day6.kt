@@ -1,10 +1,11 @@
-package problems
+package main.kotlin.problems
 
-import common.*
+import main.kotlin.common.ISolution
+import main.kotlin.common.readFileAsStrings
 
 class Day6 : ISolution {
     override fun part1(): String {
-        val lines = readFileAsStrings("${getPath()}/problems/input/6.in")
+        val lines = readFileAsStrings("6.in")
 
         val res = lines
                 .let(::parseGroups)
@@ -15,7 +16,7 @@ class Day6 : ISolution {
     }
 
     override fun part2(): String {
-        val lines = readFileAsStrings("${getPath()}/problems/input/6.in")
+        val lines = readFileAsStrings("6.in")
 
         val res = lines
                 .let(::parseGroups)

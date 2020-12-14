@@ -1,11 +1,12 @@
-package problems
+package main.kotlin.problems
 
-import common.*
+import main.kotlin.common.ISolution
+import main.kotlin.common.readFileAsInts
 import java.math.BigInteger
 
 class Day10 : ISolution {
     override fun part1(): String {
-        val adapters = readFileAsInts("${getPath()}/problems/input/10.in")
+        val adapters = readFileAsInts("10.in")
         adapters.sort()
         adapters.add(adapters[adapters.lastIndex] + 3)
         adapters.add(0, 0)
@@ -25,7 +26,7 @@ class Day10 : ISolution {
     }
 
     override fun part2(): String {
-        val adapters = readFileAsInts("${getPath()}/problems/input/10.in")
+        val adapters = readFileAsInts("10.in")
         adapters.sort()
         adapters.add(adapters[adapters.lastIndex] + 3)
         adapters.add(0, 0)

@@ -1,11 +1,12 @@
-package problems
+package main.kotlin.problems
 
-import common.*
+import main.kotlin.common.ISolution
+import main.kotlin.common.readFileAsCharArray
 import java.math.BigInteger
 
 class Day3 : ISolution {
     override fun part1(): String {
-        val grid = readFileAsCharArray("${getPath()}/problems/input/3.in")
+        val grid = readFileAsCharArray("3.in")
 
         val treeCount = getTreeCount(grid)
 
@@ -13,7 +14,7 @@ class Day3 : ISolution {
     }
 
     override fun part2(): String {
-        val grid = readFileAsCharArray("${getPath()}/problems/input/3.in")
+        val grid = readFileAsCharArray("3.in")
 
         var treeCountProduct: BigInteger = BigInteger.ONE
 

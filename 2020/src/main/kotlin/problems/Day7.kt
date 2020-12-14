@@ -1,11 +1,12 @@
-package problems
+package main.kotlin.problems
 
-import common.*
+import main.kotlin.common.ISolution
+import main.kotlin.common.readFileAsStrings
 import kotlin.collections.ArrayList
 
 class Day7 : ISolution {
     override fun part1(): String {
-        val lines = readFileAsStrings("${getPath()}/problems/input/7.in")
+        val lines = readFileAsStrings("7.in")
 
         val bags = getBags(lines)
         val bagsThatContainGold = bags.filter { it.value.contains("shiny gold", bags) }.count()
@@ -14,7 +15,7 @@ class Day7 : ISolution {
     }
 
     override fun part2(): String {
-        val lines = readFileAsStrings("${getPath()}/problems/input/7.in")
+        val lines = readFileAsStrings("7.in")
 
         val bags = getBags(lines)
         val totalBagsContainedInGold = bags["shiny gold"]?.countInnerBags(bags)

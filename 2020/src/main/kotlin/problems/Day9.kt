@@ -1,12 +1,13 @@
-package problems
+package main.kotlin.problems
 
-import common.*
+import main.kotlin.common.ISolution
+import main.kotlin.common.readFileAsLongs
 
 class Day9 : ISolution {
     private var target: Long = 0
 
     override fun part1(): String {
-        val nums = readFileAsLongs("${getPath()}/problems/input/9.in")
+        val nums = readFileAsLongs("9.in")
 
         for (i in 25 until nums.size) {
             val prevList = nums.subList(i - 25, i)
@@ -22,7 +23,7 @@ class Day9 : ISolution {
     }
 
     override fun part2(): String {
-        val nums = readFileAsLongs("${getPath()}/problems/input/9.in")
+        val nums = readFileAsLongs("9.in")
 
         var low = 0
         var high = 0

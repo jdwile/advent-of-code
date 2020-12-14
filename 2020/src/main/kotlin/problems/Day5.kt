@@ -1,10 +1,11 @@
-package problems
+package main.kotlin.problems
 
-import common.*
+import main.kotlin.common.ISolution
+import main.kotlin.common.readFileAsStrings
 
 class Day5 : ISolution {
     override fun part1(): String {
-        val barcodes = readFileAsStrings("${getPath()}/problems/input/5.in")
+        val barcodes = readFileAsStrings("5.in")
 
         val max = barcodes.map(::getSeatId).maxOrNull()!!
 
@@ -12,7 +13,7 @@ class Day5 : ISolution {
     }
 
     override fun part2(): String {
-        val barcodes = readFileAsStrings("${getPath()}/problems/input/5.in")
+        val barcodes = readFileAsStrings("5.in")
 
         val myId = barcodes
                 .map(::getSeatId)

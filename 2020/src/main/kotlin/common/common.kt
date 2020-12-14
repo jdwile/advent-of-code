@@ -1,16 +1,15 @@
-package common
+package main.kotlin.common
 
 import java.io.File
-import java.math.BigInteger
 
 fun getPath(): String {
-    return System.getProperty("user.dir") + "/src/main/kotlin"
+    return System.getProperty("user.dir") + "/src/main/kotlin/problems/input/"
 }
 
 fun readFileAsStrings(fileName: String): ArrayList<String> {
     val res = ArrayList<String>()
 
-    File(fileName).forEachLine { res.add(it) }
+    File("${getPath()}$fileName").forEachLine { res.add(it) }
 
     return res
 }
@@ -34,7 +33,7 @@ fun readFileAsLongs(fileName: String): ArrayList<Long> {
 fun readFileAsCharArray(fileName: String): Array<CharArray> {
     val res = ArrayList<CharArray>()
 
-    File(fileName).forEachLine { res.add(it.toCharArray()) }
+    File("${getPath()}$fileName").forEachLine { res.add(it.toCharArray()) }
 
     return res.toTypedArray()
 }

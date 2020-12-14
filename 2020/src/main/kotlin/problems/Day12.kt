@@ -1,11 +1,12 @@
-package problems
+package main.kotlin.problems
 
-import common.*
+import main.kotlin.common.ISolution
+import main.kotlin.common.readFileAsStrings
 import kotlin.math.abs
 
 class Day12 : ISolution {
     override fun part1(): String {
-        val instructions = readFileAsStrings("${getPath()}/problems/input/12.in")
+        val instructions = readFileAsStrings("12.in")
 
         var x = 0
         var y = 0
@@ -38,7 +39,7 @@ class Day12 : ISolution {
     }
 
     override fun part2(): String {
-        val instructions = readFileAsStrings("${getPath()}/problems/input/12.in")
+        val instructions = readFileAsStrings("12.in")
 
         var x = 0
         var y = 0

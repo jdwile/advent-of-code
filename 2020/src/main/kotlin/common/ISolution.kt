@@ -1,4 +1,4 @@
-package common
+package main.kotlin.common
 
 interface ISolution {
     fun part1(): String

@@ -1,6 +1,6 @@
 package main.kotlin.problems
 
-import common.*
+import main.kotlin.common.ISolution
 
 class Day15 : ISolution {
     override fun part1(): String {

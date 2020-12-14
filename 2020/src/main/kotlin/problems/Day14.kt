@@ -1,11 +1,12 @@
-package problems
+package main.kotlin.problems
 
-import common.*
+import main.kotlin.common.ISolution
+import main.kotlin.common.readFileAsStrings
 import java.lang.Long.toBinaryString
 
 class Day14 : ISolution {
     override fun part1(): String {
-        val lines = readFileAsStrings("${getPath()}/problems/input/14.in")
+        val lines = readFileAsStrings("14.in")
         val memoryRegex = Regex("^mem\\[([0-9]*)\\] = ([0-9]*)\$")
         val maskRegex = Regex("^mask = (.*)\$")
         var bitmask = ""
@@ -27,7 +28,7 @@ class Day14 : ISolution {
     }
 
     override fun part2(): String {
-        val lines = readFileAsStrings("${getPath()}/problems/input/14.in")
+        val lines = readFileAsStrings("14.in")
         val memoryRegex = Regex("^mem\\[([0-9]*)\\] = ([0-9]*)\$")
         val maskRegex = Regex("^mask = (.*)\$")
         var bitmask = ""

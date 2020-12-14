@@ -1,16 +1,17 @@
-package problems
+package main.kotlin.problems
 
-import common.*
+import main.kotlin.common.ISolution
+import main.kotlin.common.readFileAsInts
 
 class Day1 : ISolution {
     override fun part1(): String {
-        val lines = readFileAsInts("${getPath()}/problems/input/1.in")
+        val lines = readFileAsInts("1.in")
 
         return "Day 1, Part 1: " + findPairSum(lines, 2020)
     }
 
     override fun part2(): String {
-        val lines = readFileAsInts("${getPath()}/problems/input/1.in")
+        val lines = readFileAsInts("1.in")
 
         for (i in 0 until lines.size - 2) {
             val res = findPairSum(lines, 2020 - lines[i])
@@ -23,7 +24,7 @@ class Day1 : ISolution {
         return "uh oh"
     }
 
-    fun findPairSum(nums: ArrayList<Int>, goal: Int): Int {
+    private fun findPairSum(nums: ArrayList<Int>, goal: Int): Int {
         for (i in 0 until nums.size - 1) {
             for (j in i until nums.size) {
                 val iv = nums[i]

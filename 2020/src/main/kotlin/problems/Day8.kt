@@ -1,10 +1,11 @@
-package problems
+package main.kotlin.problems
 
-import common.*
+import main.kotlin.common.ISolution
+import main.kotlin.common.readFileAsStrings
 
 class Day8 : ISolution {
     override fun part1(): String {
-        val program = readFileAsStrings("${getPath()}/problems/input/8.in")
+        val program = readFileAsStrings("8.in")
                 .map { it.split(" ") }
                 .map { Instruction(it[0], it[1].toInt()) }
 
@@ -14,7 +15,7 @@ class Day8 : ISolution {
     }
 
     override fun part2(): String {
-        val program = readFileAsStrings("${getPath()}/problems/input/8.in")
+        val program = readFileAsStrings("8.in")
                 .map { it.split(" ") }
                 .map { Instruction(it[0], it[1].toInt()) }
 

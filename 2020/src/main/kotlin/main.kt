@@ -1,6 +1,5 @@
-import common.ISolution
-import main.kotlin.problems.Day15
-import problems.*
+import main.kotlin.common.ISolution
+import main.kotlin.problems.*
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import kotlin.system.measureNanoTime

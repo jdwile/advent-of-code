@@ -1,10 +1,12 @@
 package problems
 
-import common.*
+import main.kotlin.common.ISolution
+import main.kotlin.common.getPath
+import main.kotlin.common.readFileAsInts
 
 class Example : ISolution {
     override fun part1(): String {
-        val lines = readFileAsInts("${getPath()}/problems/input/ex.in")
+        val lines = readFileAsInts("ex.in")
 
         var res = 0
         lines.forEach { res += (it / 3) - 2 }
@@ -13,7 +15,7 @@ class Example : ISolution {
     }
 
     override fun part2(): String {
-        val lines = readFileAsInts("${getPath()}/problems/input/ex.in")
+        val lines = readFileAsInts("ex.in")
 
         var res = 0
         lines.forEach {

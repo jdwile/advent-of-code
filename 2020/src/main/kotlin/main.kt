@@ -1,4 +1,5 @@
 import common.ISolution
+import main.kotlin.problems.Day15
 import problems.*
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -20,6 +21,7 @@ fun main() {
     solutions.add(Day12())
     solutions.add(Day13())
     solutions.add(Day14())
+    solutions.add(Day15())
 
     val dec = DecimalFormat("###,###.##")
     dec.roundingMode = RoundingMode.HALF_UP
@@ -38,6 +40,6 @@ fun main() {
         println(" - " + dec.format(part2Time / 50 / 1000000) + "ms")
     }
 
-//      println(solutions[13].part1())
-//      println(solutions[13].part2())
+//      println(solutions[14].part1())
+//      println(solutions[14].part2())
 }

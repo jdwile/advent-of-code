@@ -40,6 +40,6 @@ fun main() {
         println(" - " + dec.format(part2Time / 50 / 1000000) + "ms")
     }
 
-//      println(solutions[15].part1())
-//      println(solutions[15].part2())
+//      println(solutions[14].part1())
+//      println(solutions[14].part2())
 }

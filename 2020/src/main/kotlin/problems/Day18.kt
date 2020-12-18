@@ -4,9 +4,9 @@ import main.kotlin.common.*
 import java.util.*
 
 class Day18 : ISolution {
-    val DIGITS = (0..9).joinToString().toCharArray()
-    lateinit var operands: Stack<Long>
-    lateinit var operators: Stack<Char>
+    private val digits = (0..9).joinToString().toCharArray()
+    private lateinit var operands: Stack<Long>
+    private lateinit var operators: Stack<Char>
 
     override fun part1(): String {
         val lines = readFileAsStrings("18.in")
@@ -20,7 +20,7 @@ class Day18 : ISolution {
                 val cur = line[i]
                 when (cur) {
                     ' ' -> continue
-                    in DIGITS -> {
+                    in digits -> {
                         operands.push(cur.toString().toLong())
                     }
                     '+', '*' -> {
@@ -51,7 +51,7 @@ class Day18 : ISolution {
                 val cur = line[i]
                 when (cur) {
                     ' ' -> continue
-                    in DIGITS -> {
+                    in digits -> {
                         operands.push(cur.toString().toLong())
                     }
                     '+', '*' -> {
@@ -89,8 +89,7 @@ class Day18 : ISolution {
 
     private fun evaluateWithPrecedence(precedent: Char, shouldRemoveParen: Boolean = false) {
         val allowed = when (precedent) {
-            '+' -> listOf('+')
-            '*' -> listOf('+')
+            '+', '*' -> listOf('+')
             ')' -> listOf('*', '+')
             else -> throw Exception(":(")
         }

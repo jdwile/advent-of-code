@@ -23,9 +23,9 @@ class Day19 : ISolution {
             s = digitRegex.replace(s) { m -> "(${rules[m.value.toInt()]})" }
         }
 
-        var regex = Regex("^" + s.replace(" ", "").replace("\"", "") + "\$")
+        val regex = Regex("^" + s.replace(" ", "").replace("\"", "") + "\$")
 
-        var res = messages.filter { regex.matches(it) }.size
+        val res = messages.filter { regex.matches(it) }.size
 
         return "Day 19, Part 1 - $res"
     }

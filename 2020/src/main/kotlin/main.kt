@@ -26,6 +26,7 @@ fun main() {
     solutions.add(Day18())
     solutions.add(Day19())
     solutions.add(Day20())
+    solutions.add(Day21())
 
     val dec = DecimalFormat("###,###.##")
     dec.roundingMode = RoundingMode.HALF_UP
@@ -50,6 +51,6 @@ fun main() {
 //    println("\nTotal Time: ${dec.format(totalTime / 50 / 1000000 / 1000)} seconds (${dec.format(totalTime / 50 / 1000000)} ms)")
 //    println("Average Time per problem: ${dec.format(totalTime / 50 / 1000000 / solutions.size)} ms")
 
-      println(solutions[18].part1())
-      println(solutions[18].part2())
+      println(solutions[19].part1())
+      println(solutions[19].part2())
 }

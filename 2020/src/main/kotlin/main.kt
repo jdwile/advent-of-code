@@ -47,7 +47,7 @@ fun main() {
 //            println(" - " + dec.format(part2Time / 50 / 1000000) + "ms")
 //        }
 //    }.toDouble()
-//
+
 //    println("\nTotal Time: ${dec.format(totalTime / 50 / 1000000 / 1000)} seconds (${dec.format(totalTime / 50 / 1000000)} ms)")
 //    println("Average Time per problem: ${dec.format(totalTime / 50 / 1000000 / solutions.size)} ms")
 

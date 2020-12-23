@@ -33,26 +33,26 @@ fun main() {
     val dec = DecimalFormat("###,###.##")
     dec.roundingMode = RoundingMode.HALF_UP
 
-    val totalTime: Double = measureNanoTime {
+//    val totalTime: Double = measureNanoTime {
+//
+//        solutions.forEach {
+//            val part1Time: Double = measureNanoTime {
+//                repeat(20) { _ -> it.part1() }
+//            }.toDouble()
+//            print(it.part1())
+//            println(" - " + dec.format(part1Time / 20 / 1000000) + "ms")
+//
+//            val part2Time: Double = measureNanoTime {
+//                repeat(20) { _ -> it.part2() }
+//            }.toDouble()
+//            print(it.part2())
+//            println(" - " + dec.format(part2Time / 20 / 1000000) + "ms")
+//        }
+//    }.toDouble()
+//
+//    println("\nTotal Time: ${dec.format(totalTime / 50 / 1000000 / 1000)} seconds (${dec.format(totalTime / 50 / 1000000)} ms)")
+//    println("Average Time per problem: ${dec.format(totalTime / 50 / 1000000 / solutions.size)} ms")
 
-        solutions.forEach {
-            val part1Time: Double = measureNanoTime {
-                repeat(20) { _ -> it.part1() }
-            }.toDouble()
-            print(it.part1())
-            println(" - " + dec.format(part1Time / 20 / 1000000) + "ms")
-
-            val part2Time: Double = measureNanoTime {
-                repeat(20) { _ -> it.part2() }
-            }.toDouble()
-            print(it.part2())
-            println(" - " + dec.format(part2Time / 20 / 1000000) + "ms")
-        }
-    }.toDouble()
-
-    println("\nTotal Time: ${dec.format(totalTime / 50 / 1000000 / 1000)} seconds (${dec.format(totalTime / 50 / 1000000)} ms)")
-    println("Average Time per problem: ${dec.format(totalTime / 50 / 1000000 / solutions.size)} ms")
-
-//      println(solutions[20].part1())
-//      println(solutions[20].part2())
+      println(solutions[20].part1())
+      println(solutions[20].part2())
 }

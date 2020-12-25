@@ -20,40 +20,42 @@ fun main() {
     solutions.add(Day12())
     solutions.add(Day13())
     solutions.add(Day14())
-//    solutions.add(Day15())
+    solutions.add(Day15())
     solutions.add(Day16())
     solutions.add(Day17())
     solutions.add(Day18())
     solutions.add(Day19())
     solutions.add(Day20())
     solutions.add(Day21())
-//    solutions.add(Day22())
-//    solutions.add(Day23())
-//    solutions.add(Day24())
+    solutions.add(Day22())
+    solutions.add(Day23())
+    solutions.add(Day24())
     solutions.add(Day25())
 
     val dec = DecimalFormat("###,###.##")
     dec.roundingMode = RoundingMode.HALF_UP
 
+    val times = 10
+
     val totalTime: Double = measureNanoTime {
 
         solutions.forEach {
             val part1Time: Double = measureNanoTime {
-                repeat(20) { _ -> it.part1() }
+                repeat(times) { _ -> it.part1() }
             }.toDouble()
             print(it.part1())
-            println(" - " + dec.format(part1Time / 20 / 1000000) + "ms")
+            println(" - " + dec.format(part1Time / times / 1000000) + "ms")
 
             val part2Time: Double = measureNanoTime {
-                repeat(20) { _ -> it.part2() }
+                repeat(times) { _ -> it.part2() }
             }.toDouble()
             print(it.part2())
-            println(" - " + dec.format(part2Time / 20 / 1000000) + "ms")
+            println(" - " + dec.format(part2Time / times / 1000000) + "ms")
         }
     }.toDouble()
 
-    println("\nTotal Time: ${dec.format(totalTime / 20 / 1000000 / 1000)} seconds (${dec.format(totalTime / 50 / 1000000)} ms)")
-    println("Average Time per problem: ${dec.format(totalTime / 20 / 1000000 / solutions.size)} ms")
+    println("\nTotal Time: ${dec.format(totalTime / times / 1000000 / 1000)} seconds (${dec.format(totalTime / times / 1000000)} ms)")
+    println("Average Time per problem: ${dec.format(totalTime / times / 1000000 / solutions.size)} ms")
 
 //      println(solutions[20].part1())
 //      println(solutions[20].part2())

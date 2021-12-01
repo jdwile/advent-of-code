@@ -3,7 +3,7 @@ from utils.aoc import timer
 
 day1 = Solution()
 
-days = [day1, day1, day1]
+days = [day1]
 
 
 @timer

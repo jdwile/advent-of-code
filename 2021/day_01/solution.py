@@ -1,5 +1,6 @@
 from utils.aoc import input_as_ints
 import itertools
+from collections import deque
 
 
 class Solution:
@@ -10,11 +11,23 @@ class Solution:
         self.lines = input_as_ints(filename)
 
     def solve_part_one(self) -> str:
-        for a, b in itertools.product(self.lines, self.lines):
-            if a + b == 2020:
-                return a * b
+        rot = deque(self.lines)
+        rot.rotate(1)
+        count = 0
+        for a, b in zip(self.lines[1:], list(rot)[1:]):
+            count += a > b
+
+        return count
 
     def solve_part_two(self) -> str:
-        for a, b, c in itertools.product(self.lines, self.lines, self.lines):
-            if a + b + c == 2020:
-                return a * b * c
+        rot_1, rot_2 = deque(self.lines), deque(self.lines)
+        rot_1.rotate(1)
+        rot_2.rotate(2)
+        count = 0
+        for i in range(3, len(self.lines)):
+            count += (
+                self.lines[i] + rot_1[i] + rot_2[i]
+                > self.lines[i - 1] + rot_1[i - 1] + rot_2[i - 1]
+            )
+
+        return count

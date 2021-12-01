@@ -7,23 +7,23 @@ class Test_Day1Solution(unittest.TestCase):
 
     def test_part_one_example(self):
         sut = Solution(
-            f"C:\\Users\\Jenner\\bench\\advent-of-code\\2021\\tests\\{self.name}\\test_input.txt"
+            f"C:\\Users\\Jenner\\bench\\advent-of-code\\2021\\tests\\test_input\\{self.name}.txt"
         )
-        self.assertEqual(sut.solve_part_one(), 514579)
+        self.assertEqual(sut.solve_part_one(), 7)
 
     def test_part_two_example(self):
         sut = Solution(
-            f"C:\\Users\\Jenner\\bench\\advent-of-code\\2021\\tests\\{self.name}\\test_input.txt"
+            f"C:\\Users\\Jenner\\bench\\advent-of-code\\2021\\tests\\test_input\\{self.name}.txt"
         )
-        self.assertEqual(sut.solve_part_two(), 241861950)
+        self.assertEqual(sut.solve_part_two(), 5)
 
     def test_part_one_solution(self):
         sut = Solution()
-        self.assertEqual(sut.solve_part_one(), 468051)
+        self.assertEqual(sut.solve_part_one(), 1215)
 
     def test_part_two_solution(self):
         sut = Solution()
-        self.assertEqual(sut.solve_part_two(), 272611658)
+        self.assertEqual(sut.solve_part_two(), 1150)
 
 
 if __name__ == "__main__":

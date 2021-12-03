@@ -1,23 +1,21 @@
-from day_01.solution import Solution as Solution1
-from day_02.solution import Solution as Solution2
+from day_03.solution import Solution as Solution
 from utils.aoc import timer
 
-day1 = Solution1()
-day2 = Solution2()
+day3 = Solution()
 
-days = [day1, day2]
+solutions = {3: day3}
 
 
 @timer
 def run_part_one(day: int):
-    print(f"Day {day+1}, Part 1: {days[day].solve_part_one()}")
+    print(f"Day {day+1}, Part 1: {solutions[day].solve_part_one()}")
 
 
 @timer
 def run_part_two(day: int):
-    print(f"Day {day+1}, Part 2: {days[day].solve_part_two()}")
+    print(f"Day {day+1}, Part 2: {solutions[day].solve_part_two()}")
 
 
-for day in range(len(days)):
+for day in solutions:
     run_part_one(day)
     run_part_two(day)

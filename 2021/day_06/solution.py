@@ -6,23 +6,22 @@ class Solution:
         self,
         filename="C:\\Users\\Jenner\\bench\\advent-of-code\\2021\\day_06\\input.txt",
     ) -> None:
-        self.input = [int(x) for x in input_as_string(filename).split(",")]
+        self.input = input_as_string(filename).split(",")
 
     def solve_part_one(self) -> str:
         fish = self.simulate_fish(80)
-        return sum(fish.values())
+        return sum(fish)
 
     def solve_part_two(self) -> str:
         fish = self.simulate_fish(256)
-        return sum(fish.values())
+        return sum(fish)
 
     def simulate_fish(self, days) -> dict:
-        fish = dict.fromkeys(range(9), 0)
-        for f in self.input:
-            fish[f] += 1
+        fish = [*map(self.input.count, "012345678")]  # this is some dank shit
+        print(fish)
 
         for _ in range(days):
-            new_fish = dict.fromkeys(range(9), 0)
+            new_fish = [0] * 9
             for i in range(1, 9):
                 new_fish[i - 1] += fish[i]
             new_fish[6] += fish[0]

@@ -1,9 +1,9 @@
-from day_06.solution import Solution as Solution
+from day_07.solution import Solution as Solution
 from utils.aoc import timer
 
-day6 = Solution()
+day7 = Solution()
 
-solutions = {6: day6}
+solutions = {7: day7}
 
 
 @timer

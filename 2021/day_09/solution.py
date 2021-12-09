@@ -7,11 +7,11 @@ class Solution:
         self,
         filename="C:\\Users\\Jenner\\bench\\advent-of-code\\2021\\day_09\\input.txt",
     ) -> None:
-        self.heightmap = [[int(x) for x in line] for line in input_as_lines(filename)]
+        self.heightmap = self.parse_heightmap(input_as_lines(filename))
 
     def solve_part_one(self) -> str:
         low_points = self.get_low_points()
-        return sum([self.heightmap[i][j] + 1 for i, j in low_points])
+        return sum([self.heightmap[point] + 1 for point in low_points])
 
     def solve_part_two(self) -> str:
         low_points = self.get_low_points()
@@ -26,7 +26,7 @@ class Solution:
                 current = to_visit.pop()
                 if current in visited:
                     continue
-                current_height = self.heightmap[current[0]][current[1]]
+                current_height = self.heightmap[current]
                 visited.append(current)
                 basin.append(current)
 
@@ -35,8 +35,7 @@ class Solution:
                 valid_neighbors = [
                     n
                     for n in unvisited_neighbors
-                    if self.heightmap[n[0]][n[1]] > current_height
-                    and self.heightmap[n[0]][n[1]] < 9
+                    if self.heightmap[n] > current_height and self.heightmap[n] < 9
                 ]
 
                 for v in valid_neighbors:
@@ -47,21 +46,24 @@ class Solution:
 
     def get_low_points(self) -> list:
         low_points = []
-        for i, row in enumerate(self.heightmap):
-            for j, height in enumerate(row):
-                neighbors = self.get_neighbors(i, j)
-                if all([height < self.heightmap[ni][nj] for ni, nj in neighbors]):
-                    low_points.append((i, j))
+        for pos in self.heightmap.keys():
+            height = self.heightmap[pos]
+            neighbors = self.get_neighbors(*pos)
+            if all([height < self.heightmap[n] for n in neighbors]):
+                low_points.append(pos)
         return low_points
 
     def get_neighbors(self, i, j) -> list:
         neighbors = []
-        if i - 1 >= 0:
-            neighbors.append((i - 1, j))
-        if i + 1 < len(self.heightmap):
-            neighbors.append((i + 1, j))
-        if j - 1 >= 0:
-            neighbors.append((i, j - 1))
-        if j + 1 < len(self.heightmap[i]):
-            neighbors.append((i, j + 1))
-        return neighbors
+        neighbors.append((i - 1, j))
+        neighbors.append((i + 1, j))
+        neighbors.append((i, j - 1))
+        neighbors.append((i, j + 1))
+        return [n for n in neighbors if n in self.heightmap]
+
+    def parse_heightmap(self, lines) -> dict:
+        heightmap = {}
+        for i, line in enumerate(lines):
+            for j, height in enumerate(line):
+                heightmap[(i, j)] = int(height)
+        return heightmap

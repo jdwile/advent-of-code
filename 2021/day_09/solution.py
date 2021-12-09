@@ -18,29 +18,31 @@ class Solution:
         visited = []
         basins = []
 
-        while len(low_points) > 0:
-            to_visit = [low_points.pop()]
-            basin = []
+        def generate_basin(position):
+            if position in visited:
+                return []
 
-            while len(to_visit) > 0:
-                current = to_visit.pop()
-                if current in visited:
-                    continue
-                current_height = self.heightmap[current]
-                visited.append(current)
-                basin.append(current)
+            visited.append(position)
 
-                neighbors = self.get_neighbors(*current)
-                unvisited_neighbors = [n for n in neighbors if n not in visited]
-                valid_neighbors = [
-                    n
-                    for n in unvisited_neighbors
-                    if self.heightmap[n] > current_height and self.heightmap[n] < 9
-                ]
+            unvisited_neighbors = [
+                n for n in self.get_neighbors(*position) if n not in visited
+            ]
+            valid_neighbors = [
+                n
+                for n in unvisited_neighbors
+                if self.heightmap[n] > self.heightmap[position]
+                and self.heightmap[n] < 9
+            ]
 
-                for v in valid_neighbors:
-                    to_visit.append(v)
-            basins.append(basin)
+            basin = [position]
+            for v in valid_neighbors:
+                for r in generate_basin(v):
+                    basin.append(r)
+
+            return basin
+
+        for starting_point in low_points:
+            basins.append(generate_basin(starting_point))
 
         return math.prod(sorted([len(basin) for basin in basins], reverse=True)[0:3])
 
@@ -54,11 +56,7 @@ class Solution:
         return low_points
 
     def get_neighbors(self, i, j) -> list:
-        neighbors = []
-        neighbors.append((i - 1, j))
-        neighbors.append((i + 1, j))
-        neighbors.append((i, j - 1))
-        neighbors.append((i, j + 1))
+        neighbors = [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]
         return [n for n in neighbors if n in self.heightmap]
 
     def parse_heightmap(self, lines) -> dict:

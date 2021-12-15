@@ -17,9 +17,9 @@ class Test_Day13Solution(unittest.TestCase):
     #     )
     #     self.assertEqual(sut.solve_part_two(), 195)
 
-    # def test_part_one_solution(self):
-    #     sut = Solution()
-    #     self.assertEqual(sut.solve_part_one(), 3497)
+    def test_part_one_solution(self):
+        sut = Solution()
+        self.assertEqual(sut.solve_part_one(), 788)
 
     # def test_part_two_solution(self):
     #     sut = Solution()

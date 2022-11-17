@@ -1,0 +1,25 @@
+import { Solution, SolveParams } from "./types";
+const fs = require('fs').promises;
+
+const DAY = DAY_PLACEHOLDER;
+
+export class CLASS_NAME_PLACEHOLDER extends Solution {
+    async solve(params: SolveParams = { part1: true, part2: true }): Promise<void> {
+        const input = await fs.readFile(`src/solutions/inputs/day${DAY}.txt`);
+
+        if (params.part1) {
+            await this.solvePartOne(input);
+        }
+        if (params.part2) {
+            await this.solvePartTwo(input);
+        }
+    }
+
+    async solvePartOne(input: string): Promise<void> {
+        throw new Error('Not implemented');
+    }
+
+    async solvePartTwo(input: string): Promise<void> {
+        throw new Error('Not implemented');
+    }
+}

@@ -3,24 +3,17 @@
   "compilerOptions": {
     "rootDir": "./utils",
     "outDir": "./build",
-    "target": "es5",
+    "target": "ES2020",
     "module": "commonjs",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
+    "declaration": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "removeComments": false,
     "noImplicitAny": false,
-    "strict": true,
-    "declaration": true,
-    "types": [
-      "node"
-    ],
-    "lib": [
-      "es6",
-      "es2015",
-      "dom"
-    ],
     "esModuleInterop": true,
-    "resolveJsonModule": true
   },
   "include": [
     "utils/**/*.ts",

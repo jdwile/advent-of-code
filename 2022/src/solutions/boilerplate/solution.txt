@@ -1,3 +1,4 @@
+import { NotImplementedError } from "./errors";
 import { Solution, SolveParams } from "./types";
 const fs = require('fs').promises;
 
@@ -16,10 +17,10 @@ export class CLASS_NAME_PLACEHOLDER extends Solution {
     }
 
     async solvePartOne(input: string): Promise<void> {
-        throw new Error('Not implemented');
+        throw new NotImplementedError();
     }
 
     async solvePartTwo(input: string): Promise<void> {
-        throw new Error('Not implemented');
+        throw new NotImplementedError();
     }
 }

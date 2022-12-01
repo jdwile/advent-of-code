@@ -1,5 +1,3 @@
-// use crate::utils;
-
 #[aoc::main(01)]
 fn main(input: &str) -> (usize, usize) {
     let p1 = part1(&input);

@@ -1,7 +1,7 @@
 #[aoc::main(01)]
 fn main(input: &str) -> (usize, usize) {
-    let p1 = part1(&input);
-    let p2 = part2(&input);
+    let p1 = part1(input);
+    let p2 = part2(input);
 
     (p1, p2)
 }

@@ -19,8 +19,7 @@ fn part1(input: &str) -> i32 {
         .split("\r\n\r\n")
         .into_iter()
         .map(|elf| {
-            elf.split("\r\n")
-                .into_iter()
+            elf.lines()
                 .map(|cal_str| cal_str.parse::<i32>().unwrap())
                 .sum::<i32>()
         })
@@ -33,8 +32,7 @@ fn part2(input: &String) -> i32 {
         .split("\r\n\r\n")
         .into_iter()
         .map(|elf| {
-            elf.split("\r\n")
-                .into_iter()
+            elf.lines()
                 .map(|cal_str| cal_str.parse::<i32>().unwrap())
                 .sum::<i32>()
         })

@@ -9,7 +9,6 @@ fn main(input: &str) -> (usize, usize) {
 fn part1(input: &str) -> usize {
     input
         .split("\r\n\r\n")
-        .into_iter()
         .map(|elf| {
             elf.lines()
                 .map(|cal_str| cal_str.parse::<usize>().unwrap())
@@ -22,7 +21,6 @@ fn part1(input: &str) -> usize {
 fn part2(input: &str) -> usize {
     let mut elf_calories: Vec<usize> = input
         .split("\r\n\r\n")
-        .into_iter()
         .map(|elf| {
             elf.lines()
                 .map(|cal_str| cal_str.parse::<usize>().unwrap())

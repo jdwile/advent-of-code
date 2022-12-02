@@ -1,5 +1,14 @@
 #[aoc::main(01)]
-fn main(input: &str) -> (usize, usize) {
+pub fn main(input: &str) -> (usize, usize) {
+    solve(input)
+}
+
+#[aoc::test(01)]
+pub fn test(input: &str) -> (usize, usize) {
+    solve(input)
+}
+
+fn solve(input: &str) -> (usize, usize) {
     let p1 = part1(input);
     let p2 = part2(input);
 

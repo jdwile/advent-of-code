@@ -26,3 +26,30 @@ pub fn main(args: TokenStream, input: TokenStream) -> TokenStream {
     };
     TokenStream::from(tokens)
 }
+
+#[proc_macro_attribute]
+pub fn test(args: TokenStream, input: TokenStream) -> TokenStream {
+    let day = match &parse_macro_input!(args as AttributeArgs)[..] {
+        [NestedMeta::Lit(Lit::Int(day))] => day.token(),
+        _ => panic!("Expected one integer argument"),
+    };
+
+    let input_path = format!("../../inputs/{}.test", day);
+    let results_path = format!("../../inputs/{}.test.results", day);
+
+    let mut aoc_test = parse_macro_input!(input as ItemFn);
+    aoc_test.sig.ident = Ident::new("aoc_test", aoc_test.sig.ident.span());
+
+    let tokens = quote! {
+      const TEST_INPUT: &str = include_str!(#input_path);
+      #aoc_test
+      #[test]
+      fn test() {
+        let (p1, p2) = aoc_solution(TEST_INPUT.trim_end());
+        let (r1, r2) = include_str!(#results_path).split_once("\r\n").unwrap();
+        assert_eq!(p1, r1.parse::<usize>().unwrap());
+        assert_eq!(p2, r2.parse::<usize>().unwrap());
+      }
+    };
+    TokenStream::from(tokens)
+}

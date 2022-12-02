@@ -30,12 +30,10 @@ fn part1(input: &str) -> usize {
         })
         .map(|(opp_move, my_move)| {
             (my_move as u32 - 'X' as u32 + 1)
-                + if get_losing_move(opp_move) == my_move {
-                    LOSE
-                } else if get_winning_move(opp_move) == my_move {
-                    WIN
-                } else {
-                    DRAW
+                + match my_move {
+                    _win if get_winning_move(opp_move) == my_move => WIN,
+                    _lose if get_losing_move(opp_move) == my_move => LOSE,
+                    _ => DRAW,
                 }
         })
         .sum::<u32>() as usize

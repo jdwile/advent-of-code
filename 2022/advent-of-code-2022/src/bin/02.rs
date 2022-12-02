@@ -11,11 +11,11 @@ static DRAW: u32 = 3;
 static LOSE: u32 = 0;
 
 fn get_winning_move(mv: char) -> char {
-    char::from_u32((mv as u32 - ('A' as u32) + 1) % 3 + ('X' as u32)).unwrap()
+    char::from_u32((mv as u32 - ('A' as u32) + 1).rem_euclid(3) + ('X' as u32)).unwrap()
 }
 
 fn get_losing_move(mv: char) -> char {
-    char::from_u32((mv as u32 - ('A' as u32) + 2) % 3 + ('X' as u32)).unwrap()
+    char::from_u32((mv as u32 - ('A' as u32) + 2).rem_euclid(3) + ('X' as u32)).unwrap()
 }
 
 fn part1(input: &str) -> usize {
@@ -28,11 +28,11 @@ fn part1(input: &str) -> usize {
                 moves.1.chars().nth(0).unwrap(),
             )
         })
-        .map(|round| {
-            (round.1 as u32 - 'X' as u32 + 1)
-                + if get_losing_move(round.0) == round.1 {
+        .map(|(opp_move, my_move)| {
+            (my_move as u32 - 'X' as u32 + 1)
+                + if get_losing_move(opp_move) == my_move {
                     LOSE
-                } else if get_winning_move(round.0) == round.1 {
+                } else if get_winning_move(opp_move) == my_move {
                     WIN
                 } else {
                     DRAW
@@ -51,10 +51,10 @@ fn part2(input: &str) -> usize {
                 moves.1.chars().nth(0).unwrap(),
             )
         })
-        .map(|round| match round.1 {
-            'X' => get_losing_move(round.0) as u32 - 'X' as u32 + 1 + LOSE,
-            'Y' => round.0 as u32 - 'A' as u32 + 1 + DRAW,
-            'Z' => get_winning_move(round.0) as u32 - 'X' as u32 + 1 + WIN,
+        .map(|(opp_move, strategy)| match strategy {
+            'X' => get_losing_move(opp_move) as u32 - 'X' as u32 + 1 + LOSE,
+            'Y' => opp_move as u32 - 'A' as u32 + 1 + DRAW,
+            'Z' => get_winning_move(opp_move) as u32 - 'X' as u32 + 1 + WIN,
             _ => panic!("Invalid move"),
         })
         .sum::<u32>() as usize

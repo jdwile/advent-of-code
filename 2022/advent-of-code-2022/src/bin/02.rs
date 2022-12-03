@@ -31,10 +31,10 @@ fn part1(input: &str) -> usize {
     input
         .lines()
         .map(|line| {
-            let moves = line.split_once(" ").unwrap();
+            let moves = line.split_once(' ').unwrap();
             (
-                moves.0.chars().nth(0).unwrap(),
-                moves.1.chars().nth(0).unwrap(),
+                moves.0.chars().next().unwrap(),
+                moves.1.chars().next().unwrap(),
             )
         })
         .map(|(opp_move, my_move)| {
@@ -52,10 +52,10 @@ fn part2(input: &str) -> usize {
     input
         .lines()
         .map(|line| {
-            let moves = line.split_once(" ").unwrap();
+            let moves = line.split_once(' ').unwrap();
             (
-                moves.0.chars().nth(0).unwrap(),
-                moves.1.chars().nth(0).unwrap(),
+                moves.0.chars().next().unwrap(),
+                moves.1.chars().next().unwrap(),
             )
         })
         .map(|(opp_move, strategy)| match strategy {

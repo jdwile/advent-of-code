@@ -52,7 +52,7 @@ fn part2(input: &str) -> usize {
     input
         .lines()
         .tuples()
-        .map(|(one, two, three)| {
+        .map(|(one, two, three)| -> usize {
             get_unique_chars(one)
                 .iter()
                 .map(|item| match two.find(*item) {
@@ -62,7 +62,7 @@ fn part2(input: &str) -> usize {
                     },
                     None => 0,
                 })
-                .sum::<usize>()
+                .sum()
         })
         .sum()
 }

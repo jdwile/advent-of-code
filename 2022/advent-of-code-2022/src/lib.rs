@@ -21,11 +21,6 @@ pub fn main(args: TokenStream, input: TokenStream) -> TokenStream {
         let time = now.elapsed();
         println!("Part 1: {}", p1);
         println!("Part 2: {}", p2);
-        // if time.as_millis() > 0 {
-        //   println!("Time: {}ms", time.as_millis());
-        // } else {
-        //   println!("Time: {}μs", time.as_micros());
-        // }
         println!("Time: {:.2?}", time);
       }
     };

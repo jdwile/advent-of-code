@@ -4,8 +4,9 @@ pub fn main(input: &str) -> (usize, usize) {
 }
 
 #[aoc::test(02)]
-pub fn test(input: &str) -> (usize, usize) {
-    solve(input)
+pub fn test(input: &str) -> (String, String) {
+    let res = solve(input);
+    (res.0.to_string(), res.1.to_string())
 }
 
 fn solve(input: &str) -> (usize, usize) {

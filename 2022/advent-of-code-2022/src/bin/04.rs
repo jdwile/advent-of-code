@@ -12,10 +12,19 @@ pub fn test(input: &str) -> (String, String) {
 }
 
 fn solve(input: &str) -> (usize, usize) {
-    let p1 = part1(input);
-    let p2 = part2(input);
+    let assignments = get_assignments(input);
+
+    let p1 = part1(assignments.clone());
+    let p2 = part2(assignments.clone());
 
     (p1, p2)
+}
+
+fn get_assignments(input: &str) -> Vec<(usize, usize, usize, usize)> {
+    input
+        .lines()
+        .map(|line| scan_fmt!(line, "{d}-{d},{d}-{d}", usize, usize, usize, usize).unwrap())
+        .collect()
 }
 
 fn is_contained(a: (usize, usize), b: (usize, usize)) -> bool {
@@ -26,18 +35,16 @@ fn has_overlap(a: (usize, usize), b: (usize, usize)) -> bool {
     b.0 <= a.0 && b.1 >= a.0 || b.0 <= a.1 && b.1 >= a.1
 }
 
-fn part1(input: &str) -> usize {
-    input
-        .lines()
-        .map(|line| scan_fmt!(line, "{d}-{d},{d}-{d}", usize, usize, usize, usize).unwrap())
+fn part1(assignments: Vec<(usize, usize, usize, usize)>) -> usize {
+    assignments
+        .iter()
         .filter(|(a, b, c, d)| is_contained((*a, *b), (*c, *d)))
         .count()
 }
 
-fn part2(input: &str) -> usize {
-    input
-        .lines()
-        .map(|line| scan_fmt!(line, "{d}-{d},{d}-{d}", usize, usize, usize, usize).unwrap())
+fn part2(assignments: Vec<(usize, usize, usize, usize)>) -> usize {
+    assignments
+        .iter()
         .filter(|(a, b, c, d)| has_overlap((*a, *b), (*c, *d)) || is_contained((*a, *b), (*c, *d)))
         .count()
 }

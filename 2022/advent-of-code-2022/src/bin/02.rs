@@ -1,3 +1,5 @@
+use itertools::Itertools;
+
 #[aoc::main(02)]
 pub fn main(input: &str) -> (usize, usize) {
     solve(input)
@@ -10,8 +12,10 @@ pub fn test(input: &str) -> (String, String) {
 }
 
 fn solve(input: &str) -> (usize, usize) {
-    let p1 = part1(input);
-    let p2 = part2(input);
+    let moves = get_moves(input);
+
+    let p1 = part1(moves.clone());
+    let p2 = part2(moves.clone());
 
     (p1, p2)
 }
@@ -28,7 +32,7 @@ fn get_losing_move(mv: char) -> char {
     char::from_u32((mv as u32 - ('A' as u32) + 2).rem_euclid(3) + ('X' as u32)).unwrap()
 }
 
-fn part1(input: &str) -> usize {
+fn get_moves(input: &str) -> Vec<(char, char)> {
     input
         .lines()
         .map(|line| {
@@ -38,7 +42,13 @@ fn part1(input: &str) -> usize {
                 moves.1.chars().next().unwrap(),
             )
         })
-        .map(|(opp_move, my_move)| {
+        .collect_vec()
+}
+
+fn part1(moves: Vec<(char, char)>) -> usize {
+    moves
+        .iter()
+        .map(|&(opp_move, my_move)| {
             (my_move as u32 - 'X' as u32 + 1)
                 + match my_move {
                     _win if get_winning_move(opp_move) == my_move => WIN,
@@ -49,17 +59,10 @@ fn part1(input: &str) -> usize {
         .sum::<u32>() as usize
 }
 
-fn part2(input: &str) -> usize {
-    input
-        .lines()
-        .map(|line| {
-            let moves = line.split_once(' ').unwrap();
-            (
-                moves.0.chars().next().unwrap(),
-                moves.1.chars().next().unwrap(),
-            )
-        })
-        .map(|(opp_move, strategy)| match strategy {
+fn part2(moves: Vec<(char, char)>) -> usize {
+    moves
+        .iter()
+        .map(|&(opp_move, strategy)| match strategy {
             'X' => get_losing_move(opp_move) as u32 - 'X' as u32 + 1 + LOSE,
             'Y' => opp_move as u32 - 'A' as u32 + 1 + DRAW,
             'Z' => get_winning_move(opp_move) as u32 - 'X' as u32 + 1 + WIN,

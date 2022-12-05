@@ -45,10 +45,16 @@ pub fn test(args: TokenStream, input: TokenStream) -> TokenStream {
       #aoc_test
       #[test]
       fn test() {
-        let (p1, p2) = aoc_solution(TEST_INPUT.trim_end());
+        let now = ::std::time::Instant::now();
+        let (p1, p2) = aoc_test(TEST_INPUT.trim_end());
+        let time = now.elapsed();
+        println!("Part 1: {}", p1);
+        println!("Part 2: {}", p2);
+        println!("Time: {:.2?}", time);
+
         let (r1, r2) = include_str!(#results_path).split_once("\r\n").unwrap();
-        assert_eq!(p1, r1.parse::<usize>().unwrap());
-        assert_eq!(p2, r2.parse::<usize>().unwrap());
+        assert_eq!(p1, r1);
+        assert_eq!(p2, r2);
       }
     };
     TokenStream::from(tokens)

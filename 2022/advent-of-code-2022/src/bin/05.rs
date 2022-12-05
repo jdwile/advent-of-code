@@ -18,7 +18,7 @@ fn solve(input: &str) -> (String, String) {
     let procedure = get_procedure(procedure_str);
 
     let p1 = part1(crates.clone(), procedure.clone());
-    let p2 = part2(crates.clone(), procedure.clone());
+    let p2 = part2(crates, procedure);
     (p1, p2)
 }
 

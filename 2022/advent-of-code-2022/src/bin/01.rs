@@ -13,7 +13,7 @@ fn solve(input: &str) -> (usize, usize) {
     let calories = get_calories(input);
 
     let p1 = part1(calories.clone());
-    let p2 = part2(calories.clone());
+    let p2 = part2(calories);
 
     (p1, p2)
 }

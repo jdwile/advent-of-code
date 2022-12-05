@@ -15,7 +15,7 @@ fn solve(input: &str) -> (usize, usize) {
     let assignments = get_assignments(input);
 
     let p1 = part1(assignments.clone());
-    let p2 = part2(assignments.clone());
+    let p2 = part2(assignments);
 
     (p1, p2)
 }

@@ -1,3 +1,5 @@
+use itertools::Itertools;
+
 #[aoc::main(06)]
 pub fn main(input: &str) -> (usize, usize) {
     solve(input)
@@ -15,27 +17,16 @@ fn solve(input: &str) -> (usize, usize) {
     (p1, p2)
 }
 
-fn is_unique_marker(marker: &str) -> bool {
-    let unique_chars = marker
-        .chars()
-        .fold(Vec::<char>::new(), |mut acc: Vec<char>, c| {
-            if !acc.contains(&c) {
-                acc.push(c);
-            }
-            acc
-        });
-    unique_chars.len() == marker.len()
-}
-
 fn find_marker(signal: &str, marker_size: usize) -> usize {
-    let signal = signal;
-    for i in 0..signal.len() - marker_size {
-        let marker = &signal[i..i + marker_size];
-        if is_unique_marker(marker) {
-            return i + marker_size;
-        }
-    }
-    0
+    signal
+        .chars()
+        .collect_vec()
+        .windows(marker_size)
+        .enumerate()
+        .filter(|(_, window)| window.into_iter().all_unique())
+        .map(|(i, _)| i + marker_size)
+        .next()
+        .unwrap()
 }
 
 fn part1(signal: &str) -> usize {

@@ -23,7 +23,7 @@ fn find_marker(signal: &str, marker_size: usize) -> usize {
         .collect_vec()
         .windows(marker_size)
         .enumerate()
-        .filter(|(_, window)| window.into_iter().all_unique())
+        .filter(|(_, window)| window.iter().all_unique())
         .map(|(i, _)| i + marker_size)
         .next()
         .unwrap()

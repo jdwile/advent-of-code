@@ -15,7 +15,7 @@ pub fn test(input: &str) -> (String, String) {
 fn solve(input: &str) -> (usize, usize) {
     let file_system = generate_file_system(input);
     let p1 = part1(file_system.clone());
-    let p2 = part2(file_system.clone());
+    let p2 = part2(file_system);
     (p1, p2)
 }
 
@@ -58,11 +58,11 @@ fn generate_file_system(input: &str) -> FileSystem {
     let mut directory_structure = vec![];
     let mut file_tree = HashMap::new();
 
-    for group in input.split("$").skip(1) {
+    for group in input.split('$').skip(1) {
         let command = group.lines().next().unwrap().trim();
 
         if command.starts_with("cd") {
-            let path = command.split_once(" ").unwrap().1;
+            let path = command.split_once(' ').unwrap().1;
             match path {
                 _ if path == "/" => {
                     directory_structure.clear();
@@ -78,7 +78,7 @@ fn generate_file_system(input: &str) -> FileSystem {
             let mut files = vec![];
 
             group.lines().skip(1).for_each(|line| {
-                let (size, name) = line.split_once(" ").unwrap();
+                let (size, name) = line.split_once(' ').unwrap();
 
                 match size {
                     _ if size == "dir" => {

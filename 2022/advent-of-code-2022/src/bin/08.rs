@@ -34,11 +34,10 @@ fn parse_trees(input: &str) -> Vec<Vec<i32>> {
 }
 
 fn part1(trees: Vec<Vec<i32>>) -> usize {
-    let mut highest_tree: i32 = -1;
     let mut visible_trees = HashSet::<(usize, usize)>::new();
 
     trees.iter().enumerate().for_each(|(i, row)| {
-        highest_tree = -1;
+        let mut highest_tree = -1;
         row.iter().enumerate().for_each(|(j, &tree)| {
             if tree > highest_tree {
                 highest_tree = tree;
@@ -48,7 +47,7 @@ fn part1(trees: Vec<Vec<i32>>) -> usize {
     });
 
     trees.iter().enumerate().for_each(|(i, row)| {
-        highest_tree = -1;
+        let mut highest_tree = -1;
         row.iter().enumerate().for_each(|(j, _)| {
             if trees[i][trees[i].len() - j - 1] > highest_tree {
                 highest_tree = trees[i][trees[i].len() - j - 1];
@@ -58,7 +57,7 @@ fn part1(trees: Vec<Vec<i32>>) -> usize {
     });
 
     trees[0].iter().enumerate().for_each(|(i, _)| {
-        highest_tree = -1;
+        let mut highest_tree = -1;
         trees.iter().enumerate().for_each(|(j, _)| {
             if trees[j][i] > highest_tree {
                 highest_tree = trees[j][i];
@@ -68,7 +67,7 @@ fn part1(trees: Vec<Vec<i32>>) -> usize {
     });
 
     trees[0].iter().enumerate().for_each(|(i, _)| {
-        highest_tree = -1;
+        let mut highest_tree = -1;
         trees.iter().enumerate().for_each(|(j, _)| {
             if trees[trees.len() - j - 1][i] > highest_tree {
                 highest_tree = trees[trees.len() - j - 1][i];

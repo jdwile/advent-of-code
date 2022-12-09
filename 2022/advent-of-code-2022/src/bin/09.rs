@@ -44,43 +44,8 @@ impl Position {
     }
 }
 
-fn part1(input: &str) -> usize {
-    let mut head = Position { x: 0, y: 0 };
-    let mut tail = Position { x: 0, y: 0 };
-
-    let mut tail_history = HashSet::<Position>::new();
-    tail_history.insert(tail.clone());
-
-    input.lines().for_each(|line| {
-        let (dir, mag_str) = line.split_once(' ').unwrap();
-        let mag = mag_str.parse::<i32>().unwrap();
-        let mut dest = head;
-        match dir {
-            _ if dir == "U" => dest.x += mag,
-            _ if dir == "D" => dest.x -= mag,
-            _ if dir == "L" => dest.y -= mag,
-            _ if dir == "R" => dest.y += mag,
-            _ => panic!("Shouldn't happen"),
-        };
-
-        while !head.is_covering(dest) {
-            head.move_toward(dest);
-
-            while !head.is_touching(tail) {
-                tail.move_toward(head);
-                tail_history.insert(tail);
-            }
-        }
-    });
-    tail_history.len()
-}
-
-fn part2(input: &str) -> usize {
-    let mut rope = Vec::<Position>::new();
-    for _ in 0..10 {
-        rope.push(Position { x: 0, y: 0 });
-    }
-
+fn generate_tail_history(rope_length: usize, input: &str) -> HashSet<Position> {
+    let mut rope: Vec<Position> = vec![Position { x: 0, y: 0 }; rope_length];
     let mut tail_history = HashSet::<Position>::new();
     tail_history.insert(rope[rope.len() - 1]);
 
@@ -109,5 +74,13 @@ fn part2(input: &str) -> usize {
             }
         }
     });
-    tail_history.len()
+    tail_history
+}
+
+fn part1(input: &str) -> usize {
+    generate_tail_history(2, input).len()
+}
+
+fn part2(input: &str) -> usize {
+    generate_tail_history(10, input).len()
 }

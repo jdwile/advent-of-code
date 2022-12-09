@@ -27,6 +27,7 @@ impl Position {
     fn is_touching(&self, other: Position) -> bool {
         self.x.abs_diff(other.x) <= 1 && self.y.abs_diff(other.y) <= 1
     }
+
     fn is_covering(&self, other: Position) -> bool {
         self.x == other.x && self.y == other.y
     }

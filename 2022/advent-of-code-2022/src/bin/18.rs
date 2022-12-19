@@ -57,24 +57,22 @@ impl Grid {
             for y in y_min..y_max + 1 {
                 for z in z_min..z_max + 1 {
                     if self.items.entry((x, y, z)).or_default() == &mut Value::Lava {
-                        if self.items.entry((x - 1, y, z)).or_default() == &mut Value::Air {
-                            sides += 1;
-                        }
-                        if self.items.entry((x + 1, y, z)).or_default() == &mut Value::Air {
-                            sides += 1;
-                        }
-                        if self.items.entry((x, y - 1, z)).or_default() == &mut Value::Air {
-                            sides += 1;
-                        }
-                        if self.items.entry((x, y + 1, z)).or_default() == &mut Value::Air {
-                            sides += 1;
-                        }
-                        if self.items.entry((x, y, z - 1)).or_default() == &mut Value::Air {
-                            sides += 1;
-                        }
-                        if self.items.entry((x, y, z + 1)).or_default() == &mut Value::Air {
-                            sides += 1;
-                        }
+                        let deltas = vec![
+                            (-1, 0, 0),
+                            (1, 0, 0),
+                            (0, -1, 0),
+                            (0, 1, 0),
+                            (0, 0, -1),
+                            (0, 0, 1),
+                        ];
+
+                        deltas.iter().for_each(|(dx, dy, dz)| {
+                            if self.items.entry((x + dx, y + dy, z + dz)).or_default()
+                                == &mut Value::Air
+                            {
+                                sides += 1;
+                            }
+                        });
                     }
                 }
             }

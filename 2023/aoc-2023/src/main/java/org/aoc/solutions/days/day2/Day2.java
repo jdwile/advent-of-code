@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Day2 extends AbstractSolution implements Solution {
+public class Day2 extends AbstractSolution {
   private final List<String> raw_input;
   private Map<Integer, List<Map<String, Integer>>> game_info;
   private final Map<String, Integer> COLOUR_LIMITS = Map.of("red", 12, "green", 13, "blue", 14);

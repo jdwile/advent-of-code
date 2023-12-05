@@ -5,7 +5,7 @@ import org.aoc.solutions.Solution;
 
 import java.util.*;
 
-public class Day1 extends AbstractSolution implements Solution {
+public class Day1 extends AbstractSolution {
   private final List<String> input;
 
   public Day1() {

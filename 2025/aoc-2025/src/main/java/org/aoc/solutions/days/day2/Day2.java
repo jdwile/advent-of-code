@@ -3,13 +3,10 @@ package org.aoc.solutions.days.day2;
 import org.aoc.helpers.Pair;
 import org.aoc.solutions.AbstractSolution;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Pattern;
 
 public class Day2 extends AbstractSolution {

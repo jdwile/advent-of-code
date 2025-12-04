@@ -14,7 +14,7 @@ public abstract class AbstractGridSolution implements Solution {
   protected int MAX_X, MAX_Y;
   protected Map<Pair<Integer, Integer>, List<Pair<Integer, Integer>>> neighbor_cache = new ConcurrentHashMap<>();
   protected Map<Pair<Integer, Integer>, Character> readFromFile(String filePath) {
-    String file ="C:\\Users\\Jenner\\bench\\advent-of-code\\2025\\aoc-2025\\src\\main\\java\\org\\aoc\\solutions\\days\\" + filePath;
+    String file ="C:\\Users\\jwile\\bench\\advent-of-code\\2025\\aoc-2025\\src\\main\\java\\org\\aoc\\solutions\\days\\" + filePath;
     List<String> lines = List.of();
 
     try {

@@ -15,13 +15,13 @@ public class Day5 extends AbstractSolution {
 
   public Day5() {
     this.input = this.readFromFile("day5/input.txt");
-    this.ranges = compressRanges(parseRanges(input));
+    this.ranges = parseRanges(input);
     this.ingredients = parseIngredients(input);
   }
 
   public Day5(List<String> input) {
     this.input = input;
-    this.ranges = compressRanges(parseRanges(input));
+    this.ranges = parseRanges(input);
     this.ingredients = parseIngredients(input);
   }
 
@@ -69,7 +69,7 @@ public class Day5 extends AbstractSolution {
       }
     }
 
-    return ranges;
+    return compressRanges(ranges);
   }
 
   private List<Range<Long>> compressRanges(List<Range<Long>> ranges) {
@@ -109,9 +109,8 @@ public class Day5 extends AbstractSolution {
   }
 
   private boolean isFresh(Long ingredient) {
-    for (Range<Long> range : ranges) {
-      if (range.contains(ingredient)) return true;
-    }
-    return false;
+    return ranges
+      .stream()
+      .anyMatch(range -> range.contains(ingredient));
   }
 }
